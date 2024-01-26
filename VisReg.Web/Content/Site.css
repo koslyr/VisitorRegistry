@@ -1,0 +1,394 @@
+﻿body {
+    font-size: .95em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+
+header, footer, nav, section {
+    display: block;
+}
+
+.wrap {
+    display: block;
+}
+
+.clear { 
+    clear: both; 
+    height: 50px; 
+}
+
+.uppercase{
+    text-transform: uppercase;
+}
+
+.text-large {
+  font-size: 150%;
+}
+
+.ui-autocomplete {
+position: absolute;
+z-index: 2150000000 !important;
+cursor: default;
+border: 2px solid #ccc;
+padding: 5px 0;
+border-radius: 2px;
+}
+
+#toast-container {
+    position: fixed;
+    font-size: 24px;
+    line-height: 18px;
+    float: left;
+    color: #FFF;
+}        
+
+#divLogin {
+    top: 30%;
+    left: 50%;
+    margin-top: -10em;  /*set to a negative number 1/2 of your height*/
+    margin-left: -16em; /*set to a negative number 1/2 of your width*/
+    border: 4px solid #ccc;
+    /*background-color: ivory;*/
+    position:fixed;
+}
+
+/* Placeholder italic
+-----------------------------------------------------------*/
+::-webkit-input-placeholder {
+   font-style: italic;
+}
+:-moz-placeholder {
+   font-style: italic;  
+}
+::-moz-placeholder {
+   font-style: italic;  
+}
+:-ms-input-placeholder {  
+   font-style: italic; 
+}
+/* Placeholder italic
+-----------------------------------------------------------*/
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset {
+    border: 1px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea {
+    min-height: 75px;
+}
+
+.editor-label {
+    margin: 1em 0 0 0;
+}
+
+.editor-field {
+    margin: 0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+
+
+/* Styles Custom (general).
+-----------------------------------------------------------*/
+.table thead > tr > th {
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.table tbody > tr > td {
+    vertical-align: middle;
+    margin-bottom: 0;
+}
+
+.table-borderless td, .table-borderless th {
+    border: none;
+}
+
+.table-no-border>tbody>tr>td {
+  border-top: none !important; 
+  border-bottom: none !important;
+  border-top: none; 
+}
+
+form label {
+    font-size: 14px;
+}
+
+.panel-default > .panel-heading-customGreen {
+    background:  #dff0d8;  
+}
+
+.panel-height {
+      max-height: 20px; 
+}
+
+.the-legend {
+    border-style: none;
+    border-width: 0;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.the-fieldset {
+    border: 2px groove threedface #444;
+    margin-bottom: 0;
+    margin-top: 0;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+.well {
+    margin-bottom: 1px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.well-bgcolor-Green {
+    background:  #dff0d8;  
+}
+
+.checkbox label {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  padding-left: 1px;
+}
+
+.checkbox-container {
+  float: left;
+  width: 40%;
+}
+
+.dropdown-menu .divider {
+  height: 1px;
+  width:100%;
+  display:block; /* for use on default inline elements like span */
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+/* Styles Custom (general).
+-----------------------------------------------------------*/
+
+
+/* Styles Custom for NavBar
+-----------------------------------------------------------*/
+.navbar-custom {
+	background-color:lightsteelblue;
+    color:#eeeeee;
+  	border-radius:0;
+}
+  
+.navbar-custom .navbar-nav > li > a {
+  	color:#eeeeee;
+}
+     
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus,
+.navbar-custom .navbar-nav > .open >a {
+    background-color: lightsteelblue;
+}
+ 
+.navbar-custom .navbar-nav > li{
+  margin-left:30px;
+  margin-right:30px;
+}    
+
+.navbar-custom .navbar-brand {
+  	color:#eeeeee;
+}
+
+.navbar-custom .navbar-toggle {
+  	background-color:none;
+}
+
+.navbar-custom ul.nav a:hover, ul.nav a:focus, ul.nav a:active, .dropdown-menu>li>a { 
+    color: #000; }
+
+.navbar-custom .dropdown-menu {
+    background-color: lightsteelblue;
+  }
+
+.navbar-custom .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+            text-decoration: none;
+            background-color: lightsteelblue;
+            margin-left:5px;
+            margin-right:5px;
+ }
+/* Styles Custom for NavBar
+-----------------------------------------------------------*/
+
+
+/* Styles Custom for Telerik Kendo
+-----------------------------------------------------------*/
+.k-dropdown .k-dropdown-wrap{
+    height: 26px;
+}
+
+.k-grid {
+    font-size: 11px;
+}
+
+.k-header .k-link{
+   text-align: center;
+   font-weight: bold;
+}
+
+.k-grid  .k-grid-header  .k-header  .k-link {
+    height: auto;
+}
+
+tr.k-footer-template td{
+    background-color: aquamarine;
+}
+  
+.k-grid  .k-grid-header  .k-header {
+    white-space: normal;
+}
+
+.k-grid .k-state-selected  {
+  background-color: #ffffff !important;
+  color: #000000;
+}
+ 
+.k-grid .k-alt.k-state-selected {
+  background-color: #f1f1f1 !important;
+  color: #000000;
+}
+/* Styles Custom for Telerik Kendo
+-----------------------------------------------------------*/
+
+
+/* Styles Custom for Kendo Grid Colunms
+-----------------------------------------------------------*/
+.myGridStatColNameLrg {
+    width:250px;
+    text-align:left;
+}
+
+.myGridStatColNameSml {
+    width:80px;
+    text-align:left;
+}
+
+.myGridStatColPublicCodeLrg {
+    width:60px;
+    text-align:center; 
+}
+
+.myGridStatColPublicCodeSml {
+    width:44px;
+    text-align:center; 
+}
+
+.myGridStatColTotalAllSml {
+    width:39px;
+    text-align:right; 
+    font-weight:bold;
+    color:blue;
+}
+
+.myGridColIBAN {
+    width:45px;
+    text-align:center; 
+}
+
+.myGridColDateSml {
+    width:50px;
+    text-align:center; 
+}
+
+.myGridRowUnfinalized {
+	background-color: red;
+}
+
+.myGridColColoredEdit { 
+    background-color: #ff6666 
+}
+
+.myGridColNumber { 
+    text-align:right; 
+    font-weight:bold;
+}
+
+.myGridTitle {
+      text-align: center;
+      font-weight:bold;
+    }
+/* Styles Custom for Kendo Grid Colunms
+-----------------------------------------------------------*/
+
+
+/* Styles Custom for Modal
+-----------------------------------------------------------*/
+.mymodal-dialog-center {
+    position: center;
+    padding-top: 5%;
+}
+
+.mymodal-label {
+    text-align:left; 
+    font-size:12px;
+}
+
+.mymodal-label-r {
+    text-align:right; 
+    font-size:12px;
+}
+
+.mymodal-r-label {
+    text-align:right; 
+    font-size:12px;
+}
+/* Styles Custom for Modal
+-----------------------------------------------------------*/
+
+/* Styles Custom
+-----------------------------------------------------------*/
+.myFontSpecial {
+    font-weight:bold; 
+    font-size:14px;
+}
+/* Styles Custom
+-----------------------------------------------------------*/

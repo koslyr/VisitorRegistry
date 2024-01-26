@@ -1,0 +1,53 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+<div class="modal-header">
+    <h4 class="modal-title text-center" id="myModalLabel"><strong>ΔΙΑΓΡΑΦΗ ΕΠΙΣΚΕΨΗΣ</strong></h4>
+
+    <h5>Θέλετε να <strong>ΔΙΑΓΡΑΦΕΙ</strong> η συγκεκριμένη Επίσκεψη;</h5>
+
+    @* ΕΚΤΕΛΕΣΗ ΔΙΑΓΡΑΦΗΣ ΕΠΙΤΡΟΠΗΣ *@
+    @using (Html.BeginForm("DeleteVisit", "Visit", FormMethod.Post, new { id = "frmDeleteVisit" }))
+    {
+        <div class="modal-body bg-success">
+
+            <div class="form-goup">
+                @Html.HiddenFor(m => m.VSI_Id)
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.VisitorFullName, htmlAttributes: new { @class = "control-label col-md-2", @style = "font-size:11px;" })
+                <div class="col-md-6">
+                    <span class="form-control-static text-primary myFontSpecial"><strong>@Model.VisitorFullName</strong></span>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                @Html.LabelFor(m => m.VSI_IdentificationNumber, htmlAttributes: new { @class = "control-label col-md-2", @style = "font-size:11px;" })
+                <div class="col-md-2">
+                    <span class="form-control-static text-primary myFontSpecial"><strong>@Model.VSI_IdentificationNumber</strong></span>
+                </div>
+                @Html.LabelFor(m => m.VSI_CardNumber, htmlAttributes: new { @class = "control-label col-md-2", @style = "font-size:11px;" })
+                <div class="col-md-2">
+                    <span class="form-control-static text-primary myFontSpecial"><strong>@Model.VSI_CardNumber</strong></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <div style="float:left">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-repeat"></span><strong> ΑΚΥΡΩΣΗ ΔΙΑΓΡΑΦΗΣ</strong>
+                </button>
+            </div>
+
+            <button type="submit" class="btn btn-success" id="btnDeleteVisit">
+                <span class="glyphicon glyphicon-trash"></span><strong> ΕΚΤΕΛΕΣΗ ΔΙΑΓΡΑΦΗΣ</strong>
+            </button>
+        </div>
+    }
+</div>
+
+

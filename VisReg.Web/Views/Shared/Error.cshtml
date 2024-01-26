@@ -1,0 +1,23 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@NamingStrings.TitleAppShortName - Σφάλμα</title>
+</head>
+
+<body>
+    <hgroup>
+        <h1 class="text-danger">Σφάλμα Εφαρμογής</h1>
+
+        <h4 class="text-danger">Πρόκυψε κάποιο σφάλμα κατά την εκτέλεση της εντολής σας. Παρακαλούμε δοκιμάστε @Html.ActionLink("Αρχική Σελίδα", "Home", "Index")</h4>
+    </hgroup>
+</body>
+
+</html>

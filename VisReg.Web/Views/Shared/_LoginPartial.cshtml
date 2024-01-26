@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", @style = "font-style:italic; font-weight:true;" }))
+    {
+        <li>
+            <a href="javascript:document.getElementById('logoutForm').submit()"><span style="color:yellow;"> <span class="glyphicon glyphicon-log-out"></span> <strong>ΕΞΟΔΟΣ</strong> </span></a>
+        </li>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("ΕΙΣΟΔΟΣ", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

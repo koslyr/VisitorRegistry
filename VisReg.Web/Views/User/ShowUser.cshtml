@@ -1,0 +1,130 @@
+﻿@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.UserViewModel
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+@Html.HiddenFor(m => m.USE_Id)
+
+<div class="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong> ΚΑΡΤΕΛΑ ΧΡΗΣΤΗ </strong></div>
+        </div>
+
+        <div class="panel-body">
+            <table class="table table-bordered table-striped" style="width:100%; font-size:14px">
+                <thead>
+                    <tr>
+                        <th class="col-md-2 active text-center"></th>
+                        <th class="col-md-4 active text-center"></th>
+                        <th class="col-md-2 active text-center"></th>
+                        <th class="col-md-4 active text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.USE_UserName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td colspan=3 class="form-control-static text-primary"><strong>@Model.USE_UserName</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.USE_LastName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.USE_LastName</strong></td>
+                        <td> @Html.LabelFor(m => m.USE_FirstName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.USE_FirstName</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.USE_Telephone, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.USE_Telephone</strong></td>
+                        <td> @Html.LabelFor(m => m.USE_Email, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.USE_Email</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.USE_Description, htmlAttributes: new { @class = "control-label" })</td>
+                        <td colspan=3 class="form-control-static text-primary"><strong>@Model.USE_Description</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            @* ΣΤΟΙΧΕΙΑ ΟΜΑΔΩΝ ΠΟΥ ΑΝΗΚΕΙ Ο ΧΡΗΣΤΗΣ (Grid) *@
+            <div class="row">
+                <div id="divUserUserGroup">
+                    @{ Html.RenderPartial("_ShowUserUserGroup", new UserUserGroupViewModel()); }
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+                @* ΔΙΑΓΡΑΦΗ ΧΡΗΣΤΗ  *@
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger btn-group-lg btn-block" id="btnDeleteUser">
+                        <span class="glyphicon glyphicon-trash"></span> <strong>@NamingStrings.BtnDelete</strong>
+                    </button>
+                </div>
+
+                @* ΕΠΕΞΕΓΡΑΣΙΑ ΧΡΗΣΤΗ  *@
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success btn-group-lg btn-block" id="btnEditUser"
+                            onclick="location.href='@Url.Action("EditUser", "User", new { UserId = Model.USE_Id })'">
+                        <span class="glyphicon glyphicon-edit"></span> <strong> @NamingStrings.BtnEdit </strong>
+                    </button>
+                </div>
+
+                @* ΟΡΙΣΜΟΣ ΣΥΝΘΗΜΑΤΙΚΟΥ  *@
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info btn-group-lg btn-block" id="btnSetUserPwd">
+                        <span class="glyphicon glyphicon-asterisk"></span> <strong> Ορισμός Pwd</strong>
+                    </button>
+                </div>
+
+                @* ΛΙΣΤΑ ΧΡΗΣΤΩΝ  *@
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success btn-group-lg btn-block" id="btnReturnToListUser"
+                            onclick="location.href='@Url.Action("GetUsers", "User")'">
+                        <span class="glyphicon glyphicon-circle-arrow-right"></span> <strong>@NamingStrings.BtnListUser</strong>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Μodal για ΟΡΙΣΜΟ PASSWORD -->
+<div class="container">
+    <div id="divModalUserPwd" class="modal fade in">
+        <div class="modal-dialog mymodal-dialog-center">
+            <div class="modal-content">
+                <div id="divModalContentUserPwd">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // Show Modal for define User Password.
+        $("#btnSetUserPwd").click(function () {
+            var myUserId;
+            myUserId = $("#USE_Id").val();
+            // Ορισμός του Action.
+            var myUrlAction = "/User/SetUserPassword?UserId=" + myUserId;
+
+            $.get(myUrlAction,
+                  function (data) {
+                      $("#divModalContentUserPwd").html(data);
+                      $("#divModalUserPwd").modal('show');
+                  });
+        })
+    });
+
+    function GetUserId() {
+        var myUserId = $("#USE_Id").val();
+        
+        return {
+            UserId: myUserId
+        };
+    }
+</script>

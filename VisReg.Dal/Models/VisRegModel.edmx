@@ -1,0 +1,1010 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VisitorRegistryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActionType">
+          <Key>
+            <PropertyRef Name="ACT_Id" />
+          </Key>
+          <Property Name="ACT_Id" Type="smallint" Nullable="false" />
+          <Property Name="ACT_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeInfo">
+          <Key>
+            <PropertyRef Name="EMI_Id" />
+          </Key>
+          <Property Name="EMI_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EMI_ORI_Id" Type="int" />
+          <Property Name="EMI_LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMI_FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMI_Telephone" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMI_Office" Type="nvarchar" MaxLength="4" />
+          <Property Name="EMI_Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMI_Attribute" Type="nvarchar" MaxLength="255" />
+          <Property Name="EMI_IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentificationCertificate">
+          <Key>
+            <PropertyRef Name="IDC_Id" />
+          </Key>
+          <Property Name="IDC_Id" Type="smallint" Nullable="false" />
+          <Property Name="IDC_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IDC_Order" Type="smallint" />
+          <Property Name="IDC_Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="OrganizationInfo">
+          <Key>
+            <PropertyRef Name="ORI_Id" />
+          </Key>
+          <Property Name="ORI_Id" Type="int" Nullable="false" />
+          <Property Name="ORI_Id_Parent" Type="int" />
+          <Property Name="ORI_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ORI_IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Sex">
+          <Key>
+            <PropertyRef Name="SEX_Id" />
+          </Key>
+          <Property Name="SEX_Id" Type="smallint" Nullable="false" />
+          <Property Name="SEX_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="USE_Id" />
+          </Key>
+          <Property Name="USE_Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USE_UserName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="USE_Salt" Type="nvarchar" MaxLength="50" />
+          <Property Name="USE_Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="USE_FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USE_LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USE_Telephone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USE_Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="USE_Description" Type="nvarchar(max)" />
+          <Property Name="USE_IPAddress" Type="nvarchar" MaxLength="16" />
+          <Property Name="USE_LoginLastDate" Type="datetime" />
+          <Property Name="USE_LoginCounter" Type="smallint" />
+          <Property Name="USE_IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="USG_Id" />
+          </Key>
+          <Property Name="USG_Id" Type="smallint" Nullable="false" />
+          <Property Name="USG_PublicCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="USG_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USG_IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="USG_Order" Type="smallint" />
+          <Property Name="USG_Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="UserUserGroup">
+          <Key>
+            <PropertyRef Name="UUG_Id" />
+          </Key>
+          <Property Name="UUG_Id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UUG_USE_Id" Type="smallint" Nullable="false" />
+          <Property Name="UUG_USG_Id" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitInfo">
+          <Key>
+            <PropertyRef Name="VSI_Id" />
+          </Key>
+          <Property Name="VSI_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VSI_VST_Id" Type="int" Nullable="false" />
+          <Property Name="VSI_VSC_Id" Type="smallint" />
+          <Property Name="VSI_Date" Type="date" Nullable="false" />
+          <Property Name="VSI_IdentificationNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VSI_CardNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="VSI_VSR_Id" Type="smallint" />
+          <Property Name="VSI_EMI_Id" Type="int" />
+          <Property Name="VSI_ORI_Id" Type="int" />
+          <Property Name="VSI_TimeEntrance" Type="time" Precision="7" Nullable="false" />
+          <Property Name="VSI_TimeExit" Type="time" Precision="7" />
+          <Property Name="VSI_OfficeNumber" Type="nvarchar" MaxLength="4" />
+          <Property Name="VSI_IsScheduledVisit" Type="bit" Nullable="false" />
+          <Property Name="VSI_IsForGGA" Type="bit" Nullable="false" />
+          <Property Name="VSI_MobileNumber" Type="nchar" MaxLength="10" />
+          <Property Name="VSI_Comment" Type="nvarchar(max)" />
+          <Property Name="VSI_IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitInfoLog">
+          <Key>
+            <PropertyRef Name="VIL_Id" />
+          </Key>
+          <Property Name="VIL_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VIL_USE_Id" Type="smallint" Nullable="false" />
+          <Property Name="VIL_ACT_Id" Type="smallint" Nullable="false" />
+          <Property Name="VIL_VSI_Id" Type="int" Nullable="false" />
+          <Property Name="VIL_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visitor">
+          <Key>
+            <PropertyRef Name="VST_Id" />
+          </Key>
+          <Property Name="VST_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VST_SEX_Id" Type="smallint" />
+          <Property Name="VST_VSC_Id" Type="smallint" />
+          <Property Name="VST_IDC_Id" Type="smallint" />
+          <Property Name="VST_LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="VST_FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="VST_FatherName" Type="nvarchar" MaxLength="100" />
+          <Property Name="VST_MotherName" Type="nvarchar" MaxLength="100" />
+          <Property Name="VST_IdentificationNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VST_Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="VST_PostalCode" Type="nvarchar" MaxLength="6" />
+          <Property Name="VST_MobileNumber" Type="nchar" MaxLength="10" />
+          <Property Name="VST_Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="VST_Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VisitorCategory">
+          <Key>
+            <PropertyRef Name="VSC_Id" />
+          </Key>
+          <Property Name="VSC_Id" Type="smallint" Nullable="false" />
+          <Property Name="VSC_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="VSC_Order" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitReason">
+          <Key>
+            <PropertyRef Name="VSR_Id" />
+          </Key>
+          <Property Name="VSR_Id" Type="smallint" Nullable="false" />
+          <Property Name="VSR_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="VSR_Order" Type="smallint" />
+        </EntityType>
+        <Association Name="FK_EmployeeInfo_OrganizationInfo_Level1">
+          <End Role="OrganizationInfo" Type="Self.OrganizationInfo" Multiplicity="0..1" />
+          <End Role="EmployeeInfo" Type="Self.EmployeeInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationInfo">
+              <PropertyRef Name="ORI_Id" />
+            </Principal>
+            <Dependent Role="EmployeeInfo">
+              <PropertyRef Name="EMI_ORI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserGroup_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserUserGroup" Type="Self.UserUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="USE_Id" />
+            </Principal>
+            <Dependent Role="UserUserGroup">
+              <PropertyRef Name="UUG_USE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserUserGroup_UserGroup">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="1" />
+          <End Role="UserUserGroup" Type="Self.UserUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="USG_Id" />
+            </Principal>
+            <Dependent Role="UserUserGroup">
+              <PropertyRef Name="UUG_USG_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_EmployeeInfo">
+          <End Role="EmployeeInfo" Type="Self.EmployeeInfo" Multiplicity="0..1" />
+          <End Role="VisitInfo" Type="Self.VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeInfo">
+              <PropertyRef Name="EMI_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_EMI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_OrganizationInfo">
+          <End Role="OrganizationInfo" Type="Self.OrganizationInfo" Multiplicity="0..1" />
+          <End Role="VisitInfo" Type="Self.VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationInfo">
+              <PropertyRef Name="ORI_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_ORI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_Visitor">
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="1" />
+          <End Role="VisitInfo" Type="Self.VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="VST_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_VST_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_VisitorCategory">
+          <End Role="VisitorCategory" Type="Self.VisitorCategory" Multiplicity="0..1" />
+          <End Role="VisitInfo" Type="Self.VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitorCategory">
+              <PropertyRef Name="VSC_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_VSC_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_VisitReason">
+          <End Role="VisitReason" Type="Self.VisitReason" Multiplicity="0..1" />
+          <End Role="VisitInfo" Type="Self.VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitReason">
+              <PropertyRef Name="VSR_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_VSR_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfoLog_ActionType">
+          <End Role="ActionType" Type="Self.ActionType" Multiplicity="1" />
+          <End Role="VisitInfoLog" Type="Self.VisitInfoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionType">
+              <PropertyRef Name="ACT_Id" />
+            </Principal>
+            <Dependent Role="VisitInfoLog">
+              <PropertyRef Name="VIL_ACT_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfoLog_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="VisitInfoLog" Type="Self.VisitInfoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="USE_Id" />
+            </Principal>
+            <Dependent Role="VisitInfoLog">
+              <PropertyRef Name="VIL_USE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfoLog_VisitInfo">
+          <End Role="VisitInfo" Type="Self.VisitInfo" Multiplicity="1" />
+          <End Role="VisitInfoLog" Type="Self.VisitInfoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitInfo">
+              <PropertyRef Name="VSI_Id" />
+            </Principal>
+            <Dependent Role="VisitInfoLog">
+              <PropertyRef Name="VIL_VSI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitor_IdentificationCertificate">
+          <End Role="IdentificationCertificate" Type="Self.IdentificationCertificate" Multiplicity="0..1" />
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentificationCertificate">
+              <PropertyRef Name="IDC_Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="VST_IDC_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitor_Sex">
+          <End Role="Sex" Type="Self.Sex" Multiplicity="0..1" />
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sex">
+              <PropertyRef Name="SEX_Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="VST_SEX_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitor_VisitorCategory">
+          <End Role="VisitorCategory" Type="Self.VisitorCategory" Multiplicity="0..1" />
+          <End Role="Visitor" Type="Self.Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitorCategory">
+              <PropertyRef Name="VSC_Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="VST_VSC_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VisitorRegistryModelStoreContainer">
+          <EntitySet Name="ActionType" EntityType="Self.ActionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeInfo" EntityType="Self.EmployeeInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentificationCertificate" EntityType="Self.IdentificationCertificate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganizationInfo" EntityType="Self.OrganizationInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sex" EntityType="Self.Sex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserUserGroup" EntityType="Self.UserUserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitInfo" EntityType="Self.VisitInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitInfoLog" EntityType="Self.VisitInfoLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visitor" EntityType="Self.Visitor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitorCategory" EntityType="Self.VisitorCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitReason" EntityType="Self.VisitReason" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmployeeInfo_OrganizationInfo_Level1" Association="Self.FK_EmployeeInfo_OrganizationInfo_Level1">
+            <End Role="OrganizationInfo" EntitySet="OrganizationInfo" />
+            <End Role="EmployeeInfo" EntitySet="EmployeeInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserGroup_User" Association="Self.FK_UserUserGroup_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserUserGroup" EntitySet="UserUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserUserGroup_UserGroup" Association="Self.FK_UserUserGroup_UserGroup">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserUserGroup" EntitySet="UserUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_EmployeeInfo" Association="Self.FK_VisitInfo_EmployeeInfo">
+            <End Role="EmployeeInfo" EntitySet="EmployeeInfo" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_OrganizationInfo" Association="Self.FK_VisitInfo_OrganizationInfo">
+            <End Role="OrganizationInfo" EntitySet="OrganizationInfo" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_Visitor" Association="Self.FK_VisitInfo_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_VisitorCategory" Association="Self.FK_VisitInfo_VisitorCategory">
+            <End Role="VisitorCategory" EntitySet="VisitorCategory" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_VisitReason" Association="Self.FK_VisitInfo_VisitReason">
+            <End Role="VisitReason" EntitySet="VisitReason" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfoLog_ActionType" Association="Self.FK_VisitInfoLog_ActionType">
+            <End Role="ActionType" EntitySet="ActionType" />
+            <End Role="VisitInfoLog" EntitySet="VisitInfoLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfoLog_User" Association="Self.FK_VisitInfoLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="VisitInfoLog" EntitySet="VisitInfoLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfoLog_VisitInfo" Association="Self.FK_VisitInfoLog_VisitInfo">
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+            <End Role="VisitInfoLog" EntitySet="VisitInfoLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_IdentificationCertificate" Association="Self.FK_Visitor_IdentificationCertificate">
+            <End Role="IdentificationCertificate" EntitySet="IdentificationCertificate" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_Sex" Association="Self.FK_Visitor_Sex">
+            <End Role="Sex" EntitySet="Sex" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_VisitorCategory" Association="Self.FK_Visitor_VisitorCategory">
+            <End Role="VisitorCategory" EntitySet="VisitorCategory" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VisitorRegistryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="IdentificationCertificate">
+          <Key>
+            <PropertyRef Name="IDC_Id" />
+          </Key>
+          <Property Name="IDC_Id" Type="Int16" Nullable="false" />
+          <Property Name="IDC_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IDC_Order" Type="Int16" />
+          <Property Name="IDC_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Visitor" Relationship="VisitorRegistryModel.FK_Visitor_IdentificationCertificate" FromRole="IdentificationCertificate" ToRole="Visitor" />
+          </EntityType>
+        <EntityType Name="Sex">
+          <Key>
+            <PropertyRef Name="SEX_Id" />
+          </Key>
+          <Property Name="SEX_Id" Type="Int16" Nullable="false" />
+          <Property Name="SEX_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Visitor" Relationship="VisitorRegistryModel.FK_Visitor_Sex" FromRole="Sex" ToRole="Visitor" />
+        </EntityType>
+        <EntityType Name="VisitorCategory">
+          <Key>
+            <PropertyRef Name="VSC_Id" />
+          </Key>
+          <Property Name="VSC_Id" Type="Int16" Nullable="false" />
+          <Property Name="VSC_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VSC_Order" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Visitor" Relationship="VisitorRegistryModel.FK_Visitor_VisitorCategory" FromRole="VisitorCategory" ToRole="Visitor" />
+          <NavigationProperty Name="VisitInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_VisitorCategory" FromRole="VisitorCategory" ToRole="VisitInfo" />
+          </EntityType>
+        <EntityContainer Name="VisRegDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="IdentificationCertificate" EntityType="Self.IdentificationCertificate" />
+          <EntitySet Name="Sex" EntityType="Self.Sex" />
+          <EntitySet Name="VisitorCategory" EntityType="Self.VisitorCategory" />
+          <EntitySet Name="UserGroup" EntityType="VisitorRegistryModel.UserGroup" />
+          <EntitySet Name="UserUserGroup" EntityType="VisitorRegistryModel.UserUserGroup" />
+          <AssociationSet Name="FK_UserUserGroup_UserGroup" Association="VisitorRegistryModel.FK_UserUserGroup_UserGroup">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserUserGroup" EntitySet="UserUserGroup" />
+          </AssociationSet>
+          <EntitySet Name="EmployeeInfo" EntityType="VisitorRegistryModel.EmployeeInfo" />
+          <EntitySet Name="OrganizationInfo" EntityType="VisitorRegistryModel.OrganizationInfo" />
+          <AssociationSet Name="FK_EmployeeInfo_OrganizationInfo_Level1" Association="VisitorRegistryModel.FK_EmployeeInfo_OrganizationInfo_Level1">
+            <End Role="OrganizationInfo" EntitySet="OrganizationInfo" />
+            <End Role="EmployeeInfo" EntitySet="EmployeeInfo" />
+          </AssociationSet>
+          <EntitySet Name="VisitReason" EntityType="VisitorRegistryModel.VisitReason" />
+          <EntitySet Name="Visitor" EntityType="VisitorRegistryModel.Visitor" />
+          <AssociationSet Name="FK_Visitor_IdentificationCertificate" Association="VisitorRegistryModel.FK_Visitor_IdentificationCertificate">
+            <End Role="IdentificationCertificate" EntitySet="IdentificationCertificate" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_Sex" Association="VisitorRegistryModel.FK_Visitor_Sex">
+            <End Role="Sex" EntitySet="Sex" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Visitor_VisitorCategory" Association="VisitorRegistryModel.FK_Visitor_VisitorCategory">
+            <End Role="VisitorCategory" EntitySet="VisitorCategory" />
+            <End Role="Visitor" EntitySet="Visitor" />
+          </AssociationSet>
+          <EntitySet Name="ActionType" EntityType="VisitorRegistryModel.ActionType" />
+          <EntitySet Name="VisitInfo" EntityType="VisitorRegistryModel.VisitInfo" />
+          <AssociationSet Name="FK_VisitInfo_EmployeeInfo" Association="VisitorRegistryModel.FK_VisitInfo_EmployeeInfo">
+            <End Role="EmployeeInfo" EntitySet="EmployeeInfo" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_OrganizationInfo" Association="VisitorRegistryModel.FK_VisitInfo_OrganizationInfo">
+            <End Role="OrganizationInfo" EntitySet="OrganizationInfo" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_Visitor" Association="VisitorRegistryModel.FK_VisitInfo_Visitor">
+            <End Role="Visitor" EntitySet="Visitor" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_VisitorCategory" Association="VisitorRegistryModel.FK_VisitInfo_VisitorCategory">
+            <End Role="VisitorCategory" EntitySet="VisitorCategory" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfo_VisitReason" Association="VisitorRegistryModel.FK_VisitInfo_VisitReason">
+            <End Role="VisitReason" EntitySet="VisitReason" />
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+          </AssociationSet>
+          <EntitySet Name="VisitInfoLog" EntityType="VisitorRegistryModel.VisitInfoLog" />
+          <AssociationSet Name="FK_VisitInfoLog_ActionType" Association="VisitorRegistryModel.FK_VisitInfoLog_ActionType">
+            <End Role="ActionType" EntitySet="ActionType" />
+            <End Role="VisitInfoLog" EntitySet="VisitInfoLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfoLog_VisitInfo" Association="VisitorRegistryModel.FK_VisitInfoLog_VisitInfo">
+            <End Role="VisitInfo" EntitySet="VisitInfo" />
+            <End Role="VisitInfoLog" EntitySet="VisitInfoLog" />
+          </AssociationSet>
+          <EntitySet Name="User" EntityType="VisitorRegistryModel.User" />
+          <AssociationSet Name="FK_UserUserGroup_User" Association="VisitorRegistryModel.FK_UserUserGroup_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserUserGroup" EntitySet="UserUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitInfoLog_User" Association="VisitorRegistryModel.FK_VisitInfoLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="VisitInfoLog" EntitySet="VisitInfoLog" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="USG_Id" />
+          </Key>
+          <Property Name="USG_Id" Type="Int16" Nullable="false" />
+          <Property Name="USG_PublicCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USG_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USG_IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="USG_Order" Type="Int16" />
+          <Property Name="USG_Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserUserGroup" Relationship="VisitorRegistryModel.FK_UserUserGroup_UserGroup" FromRole="UserGroup" ToRole="UserUserGroup" />
+        </EntityType>
+        <EntityType Name="UserUserGroup">
+          <Key>
+            <PropertyRef Name="UUG_Id" />
+          </Key>
+          <Property Name="UUG_Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UUG_USE_Id" Type="Int16" Nullable="false" />
+          <Property Name="UUG_USG_Id" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="UserGroup" Relationship="VisitorRegistryModel.FK_UserUserGroup_UserGroup" FromRole="UserUserGroup" ToRole="UserGroup" />
+          <NavigationProperty Name="User" Relationship="VisitorRegistryModel.FK_UserUserGroup_User" FromRole="UserUserGroup" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserUserGroup_UserGroup">
+          <End Type="VisitorRegistryModel.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="VisitorRegistryModel.UserUserGroup" Role="UserUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="USG_Id" />
+            </Principal>
+            <Dependent Role="UserUserGroup">
+              <PropertyRef Name="UUG_USG_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmployeeInfo">
+          <Key>
+            <PropertyRef Name="EMI_Id" />
+          </Key>
+          <Property Name="EMI_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EMI_ORI_Id" Type="Int32" />
+          <Property Name="EMI_LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMI_FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMI_Telephone" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMI_Office" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="EMI_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMI_Attribute" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="EMI_IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="OrganizationInfo" Relationship="VisitorRegistryModel.FK_EmployeeInfo_OrganizationInfo_Level1" FromRole="EmployeeInfo" ToRole="OrganizationInfo" />
+          <NavigationProperty Name="VisitInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_EmployeeInfo" FromRole="EmployeeInfo" ToRole="VisitInfo" />
+        </EntityType>
+        <EntityType Name="OrganizationInfo">
+          <Key>
+            <PropertyRef Name="ORI_Id" />
+          </Key>
+          <Property Name="ORI_Id" Type="Int32" Nullable="false" />
+          <Property Name="ORI_Id_Parent" Type="Int32" />
+          <Property Name="ORI_Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ORI_IsActive" Type="Boolean" />
+          <NavigationProperty Name="EmployeeInfo" Relationship="VisitorRegistryModel.FK_EmployeeInfo_OrganizationInfo_Level1" FromRole="OrganizationInfo" ToRole="EmployeeInfo" />
+          <NavigationProperty Name="VisitInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_OrganizationInfo" FromRole="OrganizationInfo" ToRole="VisitInfo" />
+        </EntityType>
+        <Association Name="FK_EmployeeInfo_OrganizationInfo_Level1">
+          <End Type="VisitorRegistryModel.OrganizationInfo" Role="OrganizationInfo" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.EmployeeInfo" Role="EmployeeInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationInfo">
+              <PropertyRef Name="ORI_Id" />
+            </Principal>
+            <Dependent Role="EmployeeInfo">
+              <PropertyRef Name="EMI_ORI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VisitReason">
+          <Key>
+            <PropertyRef Name="VSR_Id" />
+          </Key>
+          <Property Name="VSR_Id" Type="Int16" Nullable="false" />
+          <Property Name="VSR_Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VSR_Order" Type="Int16" />
+          <NavigationProperty Name="VisitInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_VisitReason" FromRole="VisitReason" ToRole="VisitInfo" />
+        </EntityType>
+        <EntityType Name="Visitor">
+          <Key>
+            <PropertyRef Name="VST_Id" />
+          </Key>
+          <Property Name="VST_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VST_SEX_Id" Type="Int16" />
+          <Property Name="VST_VSC_Id" Type="Int16" />
+          <Property Name="VST_IDC_Id" Type="Int16" />
+          <Property Name="VST_LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VST_FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VST_FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VST_MotherName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VST_IdentificationNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VST_Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="VST_PostalCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="VST_MobileNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="VST_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VST_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdentificationCertificate" Relationship="VisitorRegistryModel.FK_Visitor_IdentificationCertificate" FromRole="Visitor" ToRole="IdentificationCertificate" />
+          <NavigationProperty Name="Sex" Relationship="VisitorRegistryModel.FK_Visitor_Sex" FromRole="Visitor" ToRole="Sex" />
+          <NavigationProperty Name="VisitorCategory" Relationship="VisitorRegistryModel.FK_Visitor_VisitorCategory" FromRole="Visitor" ToRole="VisitorCategory" />
+          <NavigationProperty Name="VisitInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_Visitor" FromRole="Visitor" ToRole="VisitInfo" />
+        </EntityType>
+        <Association Name="FK_Visitor_IdentificationCertificate">
+          <End Type="VisitorRegistryModel.IdentificationCertificate" Role="IdentificationCertificate" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.Visitor" Role="Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentificationCertificate">
+              <PropertyRef Name="IDC_Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="VST_IDC_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitor_Sex">
+          <End Type="VisitorRegistryModel.Sex" Role="Sex" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.Visitor" Role="Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sex">
+              <PropertyRef Name="SEX_Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="VST_SEX_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Visitor_VisitorCategory">
+          <End Type="VisitorRegistryModel.VisitorCategory" Role="VisitorCategory" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.Visitor" Role="Visitor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitorCategory">
+              <PropertyRef Name="VSC_Id" />
+            </Principal>
+            <Dependent Role="Visitor">
+              <PropertyRef Name="VST_VSC_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ActionType">
+          <Key>
+            <PropertyRef Name="ACT_Id" />
+          </Key>
+          <Property Name="ACT_Id" Type="Int16" Nullable="false" />
+          <Property Name="ACT_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="VisitInfoLog" Relationship="VisitorRegistryModel.FK_VisitInfoLog_ActionType" FromRole="ActionType" ToRole="VisitInfoLog" />
+        </EntityType>
+        <EntityType Name="VisitInfo">
+          <Key>
+            <PropertyRef Name="VSI_Id" />
+          </Key>
+          <Property Name="VSI_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VSI_VST_Id" Type="Int32" Nullable="false" />
+          <Property Name="VSI_VSC_Id" Type="Int16" />
+          <Property Name="VSI_Date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VSI_IdentificationNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VSI_CardNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="VSI_VSR_Id" Type="Int16" />
+          <Property Name="VSI_EMI_Id" Type="Int32" />
+          <Property Name="VSI_ORI_Id" Type="Int32" />
+          <Property Name="VSI_TimeEntrance" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="VSI_TimeExit" Type="Time" Precision="7" />
+          <Property Name="VSI_OfficeNumber" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="VSI_IsScheduledVisit" Type="Boolean" Nullable="false" />
+          <Property Name="VSI_IsForGGA" Type="Boolean" Nullable="false" />
+          <Property Name="VSI_MobileNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="VSI_Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VSI_IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EmployeeInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_EmployeeInfo" FromRole="VisitInfo" ToRole="EmployeeInfo" />
+          <NavigationProperty Name="OrganizationInfo" Relationship="VisitorRegistryModel.FK_VisitInfo_OrganizationInfo" FromRole="VisitInfo" ToRole="OrganizationInfo" />
+          <NavigationProperty Name="Visitor" Relationship="VisitorRegistryModel.FK_VisitInfo_Visitor" FromRole="VisitInfo" ToRole="Visitor" />
+          <NavigationProperty Name="VisitorCategory" Relationship="VisitorRegistryModel.FK_VisitInfo_VisitorCategory" FromRole="VisitInfo" ToRole="VisitorCategory" />
+          <NavigationProperty Name="VisitReason" Relationship="VisitorRegistryModel.FK_VisitInfo_VisitReason" FromRole="VisitInfo" ToRole="VisitReason" />
+          <NavigationProperty Name="VisitInfoLog" Relationship="VisitorRegistryModel.FK_VisitInfoLog_VisitInfo" FromRole="VisitInfo" ToRole="VisitInfoLog" />
+        </EntityType>
+        <Association Name="FK_VisitInfo_EmployeeInfo">
+          <End Type="VisitorRegistryModel.EmployeeInfo" Role="EmployeeInfo" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.VisitInfo" Role="VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeInfo">
+              <PropertyRef Name="EMI_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_EMI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_OrganizationInfo">
+          <End Type="VisitorRegistryModel.OrganizationInfo" Role="OrganizationInfo" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.VisitInfo" Role="VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganizationInfo">
+              <PropertyRef Name="ORI_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_ORI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_Visitor">
+          <End Type="VisitorRegistryModel.Visitor" Role="Visitor" Multiplicity="1" />
+          <End Type="VisitorRegistryModel.VisitInfo" Role="VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Visitor">
+              <PropertyRef Name="VST_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_VST_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_VisitorCategory">
+          <End Type="VisitorRegistryModel.VisitorCategory" Role="VisitorCategory" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.VisitInfo" Role="VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitorCategory">
+              <PropertyRef Name="VSC_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_VSC_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfo_VisitReason">
+          <End Type="VisitorRegistryModel.VisitReason" Role="VisitReason" Multiplicity="0..1" />
+          <End Type="VisitorRegistryModel.VisitInfo" Role="VisitInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitReason">
+              <PropertyRef Name="VSR_Id" />
+            </Principal>
+            <Dependent Role="VisitInfo">
+              <PropertyRef Name="VSI_VSR_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="VisitInfoLog">
+          <Key>
+            <PropertyRef Name="VIL_Id" />
+          </Key>
+          <Property Name="VIL_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VIL_USE_Id" Type="Int16" Nullable="false" />
+          <Property Name="VIL_ACT_Id" Type="Int16" Nullable="false" />
+          <Property Name="VIL_VSI_Id" Type="Int32" Nullable="false" />
+          <Property Name="VIL_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ActionType" Relationship="VisitorRegistryModel.FK_VisitInfoLog_ActionType" FromRole="VisitInfoLog" ToRole="ActionType" />
+          <NavigationProperty Name="VisitInfo" Relationship="VisitorRegistryModel.FK_VisitInfoLog_VisitInfo" FromRole="VisitInfoLog" ToRole="VisitInfo" />
+          <NavigationProperty Name="User" Relationship="VisitorRegistryModel.FK_VisitInfoLog_User" FromRole="VisitInfoLog" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_VisitInfoLog_ActionType">
+          <End Type="VisitorRegistryModel.ActionType" Role="ActionType" Multiplicity="1" />
+          <End Type="VisitorRegistryModel.VisitInfoLog" Role="VisitInfoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ActionType">
+              <PropertyRef Name="ACT_Id" />
+            </Principal>
+            <Dependent Role="VisitInfoLog">
+              <PropertyRef Name="VIL_ACT_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfoLog_VisitInfo">
+          <End Type="VisitorRegistryModel.VisitInfo" Role="VisitInfo" Multiplicity="1" />
+          <End Type="VisitorRegistryModel.VisitInfoLog" Role="VisitInfoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VisitInfo">
+              <PropertyRef Name="VSI_Id" />
+            </Principal>
+            <Dependent Role="VisitInfoLog">
+              <PropertyRef Name="VIL_VSI_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="USE_Id" />
+          </Key>
+          <Property Name="USE_Id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USE_UserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USE_Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USE_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USE_FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USE_LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USE_Telephone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USE_Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="USE_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="USE_IPAddress" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="USE_LoginLastDate" Type="DateTime" Precision="3" />
+          <Property Name="USE_LoginCounter" Type="Int16" />
+          <Property Name="USE_IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserUserGroup" Relationship="VisitorRegistryModel.FK_UserUserGroup_User" FromRole="User" ToRole="UserUserGroup" />
+          <NavigationProperty Name="VisitInfoLog" Relationship="VisitorRegistryModel.FK_VisitInfoLog_User" FromRole="User" ToRole="VisitInfoLog" />
+        </EntityType>
+        <Association Name="FK_UserUserGroup_User">
+          <End Type="VisitorRegistryModel.User" Role="User" Multiplicity="1" />
+          <End Type="VisitorRegistryModel.UserUserGroup" Role="UserUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="USE_Id" />
+            </Principal>
+            <Dependent Role="UserUserGroup">
+              <PropertyRef Name="UUG_USE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitInfoLog_User">
+          <End Type="VisitorRegistryModel.User" Role="User" Multiplicity="1" />
+          <End Type="VisitorRegistryModel.VisitInfoLog" Role="VisitInfoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="USE_Id" />
+            </Principal>
+            <Dependent Role="VisitInfoLog">
+              <PropertyRef Name="VIL_USE_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VisitorRegistryModelStoreContainer" CdmEntityContainer="VisRegDB">
+          <EntitySetMapping Name="IdentificationCertificate">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.IdentificationCertificate">
+              <MappingFragment StoreEntitySet="IdentificationCertificate">
+                <ScalarProperty Name="IDC_Id" ColumnName="IDC_Id" />
+                <ScalarProperty Name="IDC_Name" ColumnName="IDC_Name" />
+                <ScalarProperty Name="IDC_Order" ColumnName="IDC_Order" />
+                <ScalarProperty Name="IDC_Description" ColumnName="IDC_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sex">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.Sex">
+              <MappingFragment StoreEntitySet="Sex">
+                <ScalarProperty Name="SEX_Id" ColumnName="SEX_Id" />
+                <ScalarProperty Name="SEX_Name" ColumnName="SEX_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitorCategory">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.VisitorCategory">
+              <MappingFragment StoreEntitySet="VisitorCategory">
+                <ScalarProperty Name="VSC_Id" ColumnName="VSC_Id" />
+                <ScalarProperty Name="VSC_Name" ColumnName="VSC_Name" />
+                <ScalarProperty Name="VSC_Order" ColumnName="VSC_Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroup">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroup">
+                <ScalarProperty Name="USG_Description" ColumnName="USG_Description" />
+                <ScalarProperty Name="USG_Order" ColumnName="USG_Order" />
+                <ScalarProperty Name="USG_IsAdmin" ColumnName="USG_IsAdmin" />
+                <ScalarProperty Name="USG_Name" ColumnName="USG_Name" />
+                <ScalarProperty Name="USG_PublicCode" ColumnName="USG_PublicCode" />
+                <ScalarProperty Name="USG_Id" ColumnName="USG_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserUserGroup">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.UserUserGroup">
+              <MappingFragment StoreEntitySet="UserUserGroup">
+                <ScalarProperty Name="UUG_USG_Id" ColumnName="UUG_USG_Id" />
+                <ScalarProperty Name="UUG_USE_Id" ColumnName="UUG_USE_Id" />
+                <ScalarProperty Name="UUG_Id" ColumnName="UUG_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeInfo">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.EmployeeInfo">
+              <MappingFragment StoreEntitySet="EmployeeInfo">
+                <ScalarProperty Name="EMI_IsActive" ColumnName="EMI_IsActive" />
+                <ScalarProperty Name="EMI_Attribute" ColumnName="EMI_Attribute" />
+                <ScalarProperty Name="EMI_Email" ColumnName="EMI_Email" />
+                <ScalarProperty Name="EMI_Office" ColumnName="EMI_Office" />
+                <ScalarProperty Name="EMI_Telephone" ColumnName="EMI_Telephone" />
+                <ScalarProperty Name="EMI_FirstName" ColumnName="EMI_FirstName" />
+                <ScalarProperty Name="EMI_LastName" ColumnName="EMI_LastName" />
+                <ScalarProperty Name="EMI_ORI_Id" ColumnName="EMI_ORI_Id" />
+                <ScalarProperty Name="EMI_Id" ColumnName="EMI_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganizationInfo">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.OrganizationInfo">
+              <MappingFragment StoreEntitySet="OrganizationInfo">
+                <ScalarProperty Name="ORI_IsActive" ColumnName="ORI_IsActive" />
+                <ScalarProperty Name="ORI_Name" ColumnName="ORI_Name" />
+                <ScalarProperty Name="ORI_Id_Parent" ColumnName="ORI_Id_Parent" />
+                <ScalarProperty Name="ORI_Id" ColumnName="ORI_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitReason">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.VisitReason">
+              <MappingFragment StoreEntitySet="VisitReason">
+                <ScalarProperty Name="VSR_Order" ColumnName="VSR_Order" />
+                <ScalarProperty Name="VSR_Name" ColumnName="VSR_Name" />
+                <ScalarProperty Name="VSR_Id" ColumnName="VSR_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visitor">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.Visitor">
+              <MappingFragment StoreEntitySet="Visitor">
+                <ScalarProperty Name="VST_Description" ColumnName="VST_Description" />
+                <ScalarProperty Name="VST_Email" ColumnName="VST_Email" />
+                <ScalarProperty Name="VST_MobileNumber" ColumnName="VST_MobileNumber" />
+                <ScalarProperty Name="VST_PostalCode" ColumnName="VST_PostalCode" />
+                <ScalarProperty Name="VST_Address" ColumnName="VST_Address" />
+                <ScalarProperty Name="VST_IdentificationNumber" ColumnName="VST_IdentificationNumber" />
+                <ScalarProperty Name="VST_MotherName" ColumnName="VST_MotherName" />
+                <ScalarProperty Name="VST_FatherName" ColumnName="VST_FatherName" />
+                <ScalarProperty Name="VST_FirstName" ColumnName="VST_FirstName" />
+                <ScalarProperty Name="VST_LastName" ColumnName="VST_LastName" />
+                <ScalarProperty Name="VST_IDC_Id" ColumnName="VST_IDC_Id" />
+                <ScalarProperty Name="VST_VSC_Id" ColumnName="VST_VSC_Id" />
+                <ScalarProperty Name="VST_SEX_Id" ColumnName="VST_SEX_Id" />
+                <ScalarProperty Name="VST_Id" ColumnName="VST_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActionType">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.ActionType">
+              <MappingFragment StoreEntitySet="ActionType">
+                <ScalarProperty Name="ACT_Name" ColumnName="ACT_Name" />
+                <ScalarProperty Name="ACT_Id" ColumnName="ACT_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitInfo">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.VisitInfo">
+              <MappingFragment StoreEntitySet="VisitInfo">
+                <ScalarProperty Name="VSI_IsActive" ColumnName="VSI_IsActive" />
+                <ScalarProperty Name="VSI_Comment" ColumnName="VSI_Comment" />
+                <ScalarProperty Name="VSI_MobileNumber" ColumnName="VSI_MobileNumber" />
+                <ScalarProperty Name="VSI_IsForGGA" ColumnName="VSI_IsForGGA" />
+                <ScalarProperty Name="VSI_IsScheduledVisit" ColumnName="VSI_IsScheduledVisit" />
+                <ScalarProperty Name="VSI_OfficeNumber" ColumnName="VSI_OfficeNumber" />
+                <ScalarProperty Name="VSI_TimeExit" ColumnName="VSI_TimeExit" />
+                <ScalarProperty Name="VSI_TimeEntrance" ColumnName="VSI_TimeEntrance" />
+                <ScalarProperty Name="VSI_ORI_Id" ColumnName="VSI_ORI_Id" />
+                <ScalarProperty Name="VSI_EMI_Id" ColumnName="VSI_EMI_Id" />
+                <ScalarProperty Name="VSI_VSR_Id" ColumnName="VSI_VSR_Id" />
+                <ScalarProperty Name="VSI_CardNumber" ColumnName="VSI_CardNumber" />
+                <ScalarProperty Name="VSI_IdentificationNumber" ColumnName="VSI_IdentificationNumber" />
+                <ScalarProperty Name="VSI_Date" ColumnName="VSI_Date" />
+                <ScalarProperty Name="VSI_VSC_Id" ColumnName="VSI_VSC_Id" />
+                <ScalarProperty Name="VSI_VST_Id" ColumnName="VSI_VST_Id" />
+                <ScalarProperty Name="VSI_Id" ColumnName="VSI_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitInfoLog">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.VisitInfoLog">
+              <MappingFragment StoreEntitySet="VisitInfoLog">
+                <ScalarProperty Name="VIL_Date" ColumnName="VIL_Date" />
+                <ScalarProperty Name="VIL_VSI_Id" ColumnName="VIL_VSI_Id" />
+                <ScalarProperty Name="VIL_ACT_Id" ColumnName="VIL_ACT_Id" />
+                <ScalarProperty Name="VIL_USE_Id" ColumnName="VIL_USE_Id" />
+                <ScalarProperty Name="VIL_Id" ColumnName="VIL_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="VisitorRegistryModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="USE_IsActive" ColumnName="USE_IsActive" />
+                <ScalarProperty Name="USE_LoginCounter" ColumnName="USE_LoginCounter" />
+                <ScalarProperty Name="USE_LoginLastDate" ColumnName="USE_LoginLastDate" />
+                <ScalarProperty Name="USE_IPAddress" ColumnName="USE_IPAddress" />
+                <ScalarProperty Name="USE_Description" ColumnName="USE_Description" />
+                <ScalarProperty Name="USE_Email" ColumnName="USE_Email" />
+                <ScalarProperty Name="USE_Telephone" ColumnName="USE_Telephone" />
+                <ScalarProperty Name="USE_LastName" ColumnName="USE_LastName" />
+                <ScalarProperty Name="USE_FirstName" ColumnName="USE_FirstName" />
+                <ScalarProperty Name="USE_Password" ColumnName="USE_Password" />
+                <ScalarProperty Name="USE_Salt" ColumnName="USE_Salt" />
+                <ScalarProperty Name="USE_UserName" ColumnName="USE_UserName" />
+                <ScalarProperty Name="USE_Id" ColumnName="USE_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

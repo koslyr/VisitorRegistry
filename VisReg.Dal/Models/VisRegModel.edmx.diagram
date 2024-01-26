@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b15a742db1af441f87cdb35278ca53f2" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="VisitorRegistryModel.IdentificationCertificate" Width="1.75" PointX="1" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.Sex" Width="1.5" PointX="1" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.VisitorCategory" Width="1.5" PointX="1.125" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.UserGroup" Width="1.5" PointX="12.25" PointY="8" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.UserUserGroup" Width="1.5" PointX="10.375" PointY="8" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_UserUserGroup_UserGroup" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.EmployeeInfo" Width="1.875" PointX="5.75" PointY="6.5" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.OrganizationInfo" Width="1.875" PointX="3.375" PointY="6.5" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_EmployeeInfo_OrganizationInfo_Level1" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.VisitReason" Width="1.5" PointX="8.375" PointY="1.625" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.Visitor" Width="1.875" PointX="3.375" PointY="0.625" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_Visitor_IdentificationCertificate" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_Visitor_Sex" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_Visitor_VisitorCategory" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.ActionType" Width="1.5" PointX="8.375" PointY="7.125" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.VisitInfo" Width="1.875" PointX="5.75" PointY="0.625" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfo_EmployeeInfo" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfo_OrganizationInfo" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfo_Visitor" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfo_VisitorCategory" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfo_VisitReason" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.VisitInfoLog" Width="1.5" PointX="8.375" PointY="4" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfoLog_ActionType" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfoLog_VisitInfo" />
+        <EntityTypeShape EntityType="VisitorRegistryModel.User" Width="1.5" PointX="10.375" PointY="3.875" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_UserUserGroup_User" />
+        <AssociationConnector Association="VisitorRegistryModel.FK_VisitInfoLog_User" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

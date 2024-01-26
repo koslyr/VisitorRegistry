@@ -1,0 +1,117 @@
+﻿@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+@Html.HiddenFor(m => m.VSI_Id)
+
+<div class="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong> ΚΑΡΤΕΛΑ ΕΠΙΣΚΕΨΗΣ </strong></div>
+        </div>
+
+        <div class="panel-body">
+            @* ΣΤΟΙΧΕΙΑ ΕΠΙΣΚΕΠΤΗ *@
+            <table class="table table-bordered table-striped" style="width:100%; font-size:14px">
+                <thead>
+                    <tr>
+                        <th class="col-md-2 active text-center"></th>
+                        <th class="col-md-4 active text-center"></th>
+                        <th class="col-md-2 active text-center"></th>
+                        <th class="col-md-4 active text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSI_Date, htmlAttributes: new { @class = "control-label" })</td>
+                        <td colspan="3" class="form-control-static text-primary"><strong>@Model.VSI_Date.ToString("dddd, dd MMMM yyyy")</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VisitorFullName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td colspan="3" class="form-control-static text-primary">
+                            <strong> @Html.ActionLink(Model.VisitorFullName, "ShowVisitor", "Visitor", new { VisitorId = Model.VSI_VST_Id }, null) </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSI_IdentificationNumber, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSI_IdentificationNumber</strong></td>
+                        <td> @Html.LabelFor(m => m.VSI_CardNumber, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSI_CardNumber</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSC_Name, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSC_Name</strong></td>
+                        <td> @Html.LabelFor(m => m.VSR_Name, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSR_Name</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.ORI_Name, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.ORI_Name</strong></td>
+                        <td> @Html.LabelFor(m => m.EMI_FullNameInfo, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.EMI_FullNameInfo</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSI_IsScheduledVisit, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@(Model.VSI_IsScheduledVisit ? "ΝΑΙ" : "ΟΧΙ")</strong></td>
+                        <td> @Html.LabelFor(m => m.VSI_IsForGGA, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@(Model.VSI_IsForGGA ? "ΝΑΙ" : "ΟΧΙ")</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSI_TimeEntrance, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSI_TimeEntrance</strong></td>
+                        <td> @Html.LabelFor(m => m.VSI_TimeExit, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSI_TimeExit</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSI_Comment, htmlAttributes: new { @class = "control-label" })</td>
+                        <td colspan="3" class="form-control-static text-primary"><strong>@Model.VSI_Comment</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                @* ΕΠΕΞΕΓΡΑΣΙΑ ΚΑΡΤΕΛΑΣ ΕΠΙΣΚΕΨΗΣ *@
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success btn-group-lg btn-block" id="btnEditVisit">
+                        <span class="glyphicon glyphicon-edit"></span> <strong> @NamingStrings.BtnEdit </strong>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Μodal για ΦΟΡΜΑ ΕΠΙΣΚΕΨΗΣ -->
+<div class="container">
+    <div id="divModalVisit" class="modal fade in">
+        <div class="modal-dialog modal-lg mymodal-dialog-center">
+            <div class="modal-content">
+                <div id="divModalContentVisit">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Click row
+        $("#btnEditVisit").click(function () {
+            var myVisitId = $("#VSI_Id").val();
+            // Ορισμός του Action.
+            var myUrlAction = "/Visit/EditVisit?VisitId=" + myVisitId;
+
+            $.get(myUrlAction,
+                  function (data) {
+                      $("#divModalContentVisit").html(data);
+                      $("#divModalVisit").modal('show');
+                  });
+        });
+    });
+
+    
+</script>

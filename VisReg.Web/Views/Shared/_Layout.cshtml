@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    
+    <script type="text/javascript">
+        window.SessionTimeout = '@Session.Timeout';
+        window.IsAuthenticated = '@(User.Identity.IsAuthenticated ? 1 : 0)';
+    </script>
+
+    <link rel="shortcut icon" type="image/ico" href="~/Content/Images/favicon.ico">
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/kendo/css")
+    @Styles.Render("~/Content/toastr/css")
+    @Styles.Render("~/Content/themes/base/css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modernizr")
+
+   @Scripts.Render("~/Scripts/kendo/js")
+   @Scripts.Render("~/kendo/culture")
+   @Scripts.Render("~/Scripts/toastr/js")
+   @Scripts.Render("~/Scripts/Utils")
+</head>
+
+<body>
+    @if (Request.IsAuthenticated)
+    {
+        @Html.Partial("_NavBar")
+    }
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="panel-footer navbar-fixed-bottom" style="padding-top:4px;">
+        @Html.Partial("_Footer")
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

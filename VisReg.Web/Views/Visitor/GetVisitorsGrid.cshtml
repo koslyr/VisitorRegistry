@@ -1,0 +1,47 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitorViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Kendo().Grid<VisitorViewModel>()
+                       .Name("grdVisitors")
+                       .ToolBar(t =>
+                                 t.Template("<h5><strong>Λίστα Επισκεπτών</strong></h5>"))
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.VST_Id).Hidden();
+                            
+                            columns.Bound(p => p.VST_LastName);
+                            columns.Bound(p => p.VST_FirstName);
+                            columns.Bound(p => p.VST_MotherName);
+                            columns.Bound(p => p.VST_IdentificationNumber);
+                            columns.Bound(p => p.VST_MobileNumber);
+                            
+                            columns.Command(cmd =>
+                            {
+                                cmd.Custom("Show").Click("ShowVisitor").Text("<span class=\"glyphicon glyphicon-eye-open\"></span> Καρτέλα");
+                            }).Title("Ενέργειες").Width(100);
+                        })
+                        .Sortable()
+                        .Selectable()
+                        .Pageable()
+                        .DataSource(ds => ds
+                                    .Ajax()
+                                    .PageSize(40)
+                                    .ServerOperation(false)
+                                    .Read(rd => rd.Action("GetVisitorsGridData", "Visitor", new { area = " " }).Data("GetSearchFilterVisitor"))
+                                    )
+        )
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Show Visitor.
+    function ShowVisitor(e) {
+        e.preventDefault();
+
+        var myVst = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location.href = "/Visitor/ShowVisitor?VisitorId=" + myVst.VST_Id;
+    }
+</script> 

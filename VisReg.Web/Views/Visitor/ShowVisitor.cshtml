@@ -1,0 +1,106 @@
+﻿@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitorViewModel
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+@Html.HiddenFor(m => m.VST_Id)
+
+<div class="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong> ΚΑΡΤΕΛΑ ΕΠΙΣΚΕΠΤΗ </strong></div>
+        </div>
+
+        <div class="panel-body">
+            @* ΣΤΟΙΧΕΙΑ ΕΠΙΣΚΕΠΤΗ *@
+            <table class="table table-bordered table-striped" style="width:100%; font-size:14px">
+                <thead>
+                    <tr>
+                        <th class="col-md-2 active text-center"></th>
+                        <th class="col-md-4 active text-center"></th>
+                        <th class="col-md-2 active text-center"></th>
+                        <th class="col-md-4 active text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VST_LastName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_LastName</strong></td>
+                        <td> @Html.LabelFor(m => m.VST_FirstName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_FirstName</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VST_FatherName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_FatherName</strong></td>
+                        <td> @Html.LabelFor(m => m.VST_MotherName, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_MotherName</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.IDC_Name, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.IDC_Name</strong></td>
+                        <td> @Html.LabelFor(m => m.VST_IdentificationNumber, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_IdentificationNumber</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VSC_Name, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VSC_Name</strong></td>
+                        <td> @Html.LabelFor(m => m.SEX_Name, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.SEX_Name</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VST_Address, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_Address</strong></td>
+                        <td> @Html.LabelFor(m => m.VST_PostalCode, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_PostalCode</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VST_MobileNumber, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_MobileNumber</strong></td>
+                        <td> @Html.LabelFor(m => m.VST_Email, htmlAttributes: new { @class = "control-label" })</td>
+                        <td class="form-control-static text-primary"><strong>@Model.VST_Email</strong></td>
+                    </tr>
+                    <tr>
+                        <td> @Html.LabelFor(m => m.VST_Description, htmlAttributes: new { @class = "control-label" })</td>
+                        <td colspan="3" class="form-control-static text-primary"><strong>@Model.VST_Description</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                @* ΕΠΕΞΕΓΡΑΣΙΑ ΚΑΡΤΕΛΑΣ ΕΠΙΣΚΕΠΤΗ  *@
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success btn-group-lg btn-block" id="btnEditVisitor"
+                            onclick="location.href='@Url.Action("EditVisitor", "Visitor", new { VisitorId = Model.VST_Id })'">
+                        <span class="glyphicon glyphicon-edit"></span> <strong> @NamingStrings.BtnEdit </strong>
+                    </button>
+                </div>
+
+                @* ΛΙΣΤΑ ΕΠΙΣΚΕΠΤΩΝ  *@
+                @*<div class="col-md-2">
+                    <button type="button" class="btn btn-success btn-group-lg btn-block" id="btnReturnToListEmp"
+                            onclick="location.href='@Url.Action("GetVisitors", "Visitor")'">
+                        <span class="glyphicon glyphicon-circle-arrow-right"></span> <strong>@NamingStrings.BtnGetVisitors</strong>
+                    </button>
+                </div>*@
+            </div>
+
+            @* ΛΙΣΤΑ ΕΠΙΣΚΕΨΕΩΝ ΤΟΥ ΕΠΙΣΚΕΠΤΗ (Grid) *@
+            <div id="divGridVisitsOfVisitor" style="margin-top:10px;">
+                @{ Html.RenderPartial("_GetVisitsOfVisitorGrid", new VisReg.Web.ViewModels.VisitInfoViewModel()); }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function GetVisitorId() {
+       var myVisitorId = $("#VST_Id").val();
+       
+       return {
+           VisitorId: myVisitorId
+       };
+   }
+</script>
+

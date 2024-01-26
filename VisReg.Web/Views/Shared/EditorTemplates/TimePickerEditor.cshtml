@@ -1,0 +1,8 @@
+﻿@model TimeSpan?
+
+@(
+    Html.Kendo().TimePickerFor(m=>m)
+                .Name("TimeSet")             
+                .Interval(1)
+                .Format("HH:mm")
+)

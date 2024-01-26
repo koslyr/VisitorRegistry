@@ -1,0 +1,43 @@
+﻿@using VisReg.Cmn.Namings
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+<div class="jumbotron">
+    <h2>ΜΗΤΡΩΟ ΕΠΙΣΚΕΠΤΩΝ Κ.Υ. ΥΠ.Π.Ε.Θ.</h2>
+    <br />
+    <p class="text-info">Εφαρμογή για την ηλεκτρονική καταχώριση στοιχείων επισκεπτών στην Κ.Υ. του Υπουργείου Παιδείας</p>
+</div>
+
+<div class="panel-body">
+    
+    <div class="row">
+        <div id="divVisitsChart" class="myChart-Wrapper" style="margin-top:6px;">
+            @{ Html.RenderPartial("_GetVisitsChart"); }
+        </div>
+    </div>
+
+    <div class="row">
+        @* Ανάκτηση ΣΥΝΟΛΟΥ ΑΙΤΗΣΕΩΝ ΑΝΑ ΚΑΤΑΣΤΑΣΗ *@
+        <div id="divVisitsGrid" style="margin-top:6px;">
+            @{ Html.RenderPartial("GetVisitsGrid"); }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Καταχώριση Επισκέπτη</h2>
+        <p>...</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Αναζητήσεις</h2>
+        <p>...</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Στατιστικά</h2>
+        <p>...</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>

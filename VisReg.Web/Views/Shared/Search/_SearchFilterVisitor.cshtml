@@ -1,0 +1,79 @@
+﻿
+@model VisReg.Web.ViewModels.VisitorViewModel
+
+<fieldset class="well the-fieldset" style="padding-top:6px;">
+    <legend class="the-legend">Κριτήρια Αναζήτησης</legend>
+
+    <div class="row" style="font-size:14px; margin-bottom:6px;">
+        @* Αναζήτηση με βάση το ΕΠΩΝΥΜΟ ΕΠΙΣΚΕΠΤΗ*@
+        <div class="col-md-1 text-right">
+            @Html.LabelFor(m => m.VST_LastName, new { @class = "control-label" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m.VST_LastName, new { @class = "form-control text-left input-group-lg", @style = "font-weight:bold" })
+        </div>
+        @* Αναζήτηση με βάση τον ΑΡΙΘΜΟ ΤΑΥΤΟΠΡΟΣΩΠΙΑΣ*@
+        <div class="col-md-2 text-right">
+            @Html.LabelFor(m => m.VST_IdentificationNumber, new { @class = "control-label" })
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(m => m.VST_IdentificationNumber, new { @class = "form-control text-left input-group-lg", @style = "font-weight:bold" })
+        </div>
+        @* Αναζήτηση με βάση τον ΑΡΙΘΜΟ ΚΙΝΗΤΟΥ*@
+        <div class="col-md-1">
+            @Html.LabelFor(m => m.VST_MobileNumber, new { @class = "control-label" })
+        </div>
+        <div class="col-md-2">
+            @Html.TextBoxFor(m => m.VST_MobileNumber, new { @class = "form-control text-left input-group-lg", @onkeypress = "return CheckInputForNumeric(event)", @maxlength = "10", @style = "font-weight:bold" })
+        </div>
+    </div>
+
+</fieldset>
+
+
+<div id="dialogNumeric" title="Εισαγωγή Χαρακτήρων μόνο Αριθμητικά" style="display:none;">
+    Μόνο <strong>ΑΡΙΘΜΗΤΙΚΑ</strong> ψηφία επιτρέπονται.
+</div>
+
+<script type="text/javascript">
+   $(document).ready(function () {
+       $("#dialogNumeric").dialog({
+            autoOpen: false,
+            resizable: false,
+            modal: true,
+            width: 500,
+            height: 120,
+            show: {
+                effect: "blind",
+                duration: 100
+            },
+            buttons: {
+                OK: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+   });
+   
+   function GetSearchFilterVisitor() {
+       var myVstLastName = $("#VST_LastName").val();
+       var myVstIdentificationNumber = $("#VST_IdentificationNumber").val();
+       var myVstMobileNumber = $("#VST_MobileNumber").val();
+
+       return {
+           VstLastName: myVstLastName,
+           VstIdentificationNumber: myVstIdentificationNumber,
+           VstMobileNumber: myVstMobileNumber
+       };
+   }
+
+   function CheckInputForNumeric(event) {
+       if (CheckForDisableValidation(event) == false) {
+           if (!isNumericCode(event.charCode)) {
+               $("#dialogNumeric").dialog("open");
+               return false;
+           }
+       }
+   }
+</script>

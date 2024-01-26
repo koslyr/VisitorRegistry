@@ -1,0 +1,52 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+<div class="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong>ΛΙΣΤΑ ΕΠΙΣΚΕΨΕΩΝ</strong></div>
+        </div>
+
+        <div class="panel-body">
+            @* ΚΡΙΤΗΤΡΙΑ ΑΝΑΖΗΤΗΣΗΣ *@
+            <div id="divSearchVisit">
+                @{ Html.RenderPartial("~/Views/Shared/Search/_SearchFilterVisitExt.cshtml"); }
+            </div>
+
+            <div class="row" style="padding-top:6px; padding-bottom:6px">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-group-lg" id="btnSearchVisitsList">
+                        <span class="glyphicon glyphicon-search"></span><strong> ΕΚΤΕΛΕΣΗ ΑΝΑΖΗΤΗΣΗΣ </strong>
+                    </button>
+                </div>
+            </div>
+
+            @* ΛΙΣΤΑ ΕΠΙΣΚΕΨΕΩΝ (Grid) *@
+            <div id="divGridVisit" style="margin-top:6px;">
+                @{ Html.RenderPartial("GetVisitsListGrid"); }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+       
+        $("#btnSearchVisitsList").click(function () {
+            $("#grdVisitsList").data("kendoGrid").dataSource.read();
+        });
+
+        // return
+        $(document).bind('keydown', function (e) {
+            if (e.which == 13) {
+                $('#btnSearchVisitsList').trigger('click');
+            }
+        });
+    });
+</script> 

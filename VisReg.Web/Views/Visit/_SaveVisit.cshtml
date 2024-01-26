@@ -1,0 +1,395 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+<div class="modal-header">
+    <h4 class="modal-title text-center" id="myModalLabel"><strong>ΦΟΡΜΑ ΕΠΙΣΚΕΨΗΣ</strong></h4>
+
+    @* ΑΠΟΘΗΚΕΥΣΗ ΦΟΡΜΑΣ ΕΠΙΣΚΕΨΗΣ *@
+    @using (Html.BeginForm("SaveVisit", "Visit", FormMethod.Post, new { id = "frmSaveVisit", role = "form", autocomplete = "off" })) 
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="modal-body bg-success">
+            <div class="form-goup">
+                @Html.HiddenFor(m => m.VSI_Id)
+                @Html.HiddenFor(m => m.VSI_VST_Id)
+                @Html.HiddenFor(m => m.VSI_IsActive)
+                @Html.HiddenFor(m => m.VSI_EMI_Id)
+                @Html.HiddenFor(m => m.VSI_ORI_Id)
+            </div>
+
+            <div class="row">
+                @Html.LabelFor(m => m.VSI_Date, htmlAttributes: new { @class = "control-label col-md-offset-2 col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DatePickerFor(m => m.VSI_Date)
+                                          .Culture("el-GR")
+                                          .HtmlAttributes(new { @class = "form-control myFontSpecial", @style = "width:100%", type = "text" }))
+                    @Html.ValidationMessageFor(m => m.VSI_Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <hr />
+
+            <div class="row">
+                @Html.LabelFor(m => m.VST_LastName, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.VST_LastName, new { htmlAttributes = new { @class = "form-control myFontSpecial", @onkeyup = "InputToUpper(this)" } })
+                    @Html.ValidationMessageFor(m => m.VST_LastName, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(m => m.VST_FirstName, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.VST_FirstName, new { htmlAttributes = new { @class = "form-control myFontSpecial", @onkeyup = "InputToUpper(this)" } })
+                    @Html.ValidationMessageFor(m => m.VST_FirstName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            
+            <div class="row">
+                @Html.LabelFor(m => m.VSI_IdentificationNumber, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.VSI_IdentificationNumber, new { htmlAttributes = new { @class = "form-control myFontSpecial",  @onkeyup = "InputToUpper(this)" } })
+                    @Html.ValidationMessageFor(m => m.ErrorForIdentificationNumber, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(m => m.VSI_CardNumber, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.VSI_CardNumber, new { htmlAttributes = new { @class = "form-control myFontSpecial", @maxlength = "3", placeholder = "000" } })
+                    @Html.ValidationMessageFor(m => m.VSI_CardNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            
+            <div class="row">
+                @Html.LabelFor(m => m.VSI_OfficeNumber, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(m => m.VSI_OfficeNumber, new { @class = "form-control", @maxlength = "4", placeholder = "0000" })
+                    @Html.ValidationMessageFor(m => m.VSI_OfficeNumber, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(m => m.VSI_IsScheduledVisit, htmlAttributes: new { @class = "control-label col-md-1 col-md-offset-2 mymodal-label-r" })
+                <div class="col-md-1 text-right">
+                    @Html.CheckBoxFor(m => m.VSI_IsScheduledVisit, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                @Html.LabelFor(m => m.VSI_IsForGGA, htmlAttributes: new { @class = "control-label col-md-1 mymodal-label-r" })
+                <div class="col-md-1 text-right">
+                    @Html.CheckBoxFor(m => m.VSI_IsForGGA, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                @Html.LabelFor(m => m.SEX_Name, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.VST_SEX_Id)
+                                                 .DataTextField("SexName")
+                                                 .DataValueField("SexId")
+                                                 .OptionLabel("-Επιλογή Φύλλου-")
+                                                 .HtmlAttributes(new { @id = "ddlSex", style = "width: 100%" })
+                                                 .DataSource(source =>
+                                                 {
+                                                     source.Read(read =>
+                                                     {
+                                                         read.Action("GetSexAll", "Common", new { area = "" });
+                                                     });
+                                                 })
+                    )
+                    @Html.ValidationMessageFor(m => m.VST_SEX_Id, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(m => m.VSI_MobileNumber, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @Html.EditorFor(m => m.VSI_MobileNumber, new { htmlAttributes = new { @class = "form-control", @maxlength = "10" } })
+                    @Html.ValidationMessageFor(m => m.VSI_MobileNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                @Html.LabelFor(m => m.VSC_Name, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.VSI_VSC_Id)
+                                                 .DataTextField("VisitorCategoryName")
+                                                 .DataValueField("VisitorCategoryId")
+                                                 .OptionLabel("-Επιλογή Κατηγορίας-")
+                                                 .HtmlAttributes(new { @id = "ddlVisitorCategory", style = "width: 100%" })
+                                                 .DataSource(source =>
+                                                 {
+                                                    source.Read(read =>
+                                                    {
+                                                        read.Action("GetVisitorCategoryAll", "Common", new { area = "" });
+                                                    });
+                                                 })
+                    )
+                    @Html.ValidationMessageFor(m => m.VSI_VSC_Id, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(m => m.VSR_Name, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().DropDownListFor(m => m.VSI_VSR_Id)
+                                                .DataTextField("VisitReasonName")
+                                                .DataValueField("VisitReasonId")
+                                                .OptionLabel("-Επιλογή Λογ. Επίσκεψης-")
+                                                .HtmlAttributes(new { @id = "ddlVisitReason", style = "width: 100%" })
+                                                .DataSource(source =>
+                                                {
+                                                    source.Read(read =>
+                                                    {
+                                                        read.Action("GetVisitReasonAll", "Common", new { area = "" });
+                                                    });
+                                                })
+                    )
+                    @Html.ValidationMessageFor(m => m.VSI_VSR_Id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <br />
+            
+            <div class="row">
+                @Html.LabelFor(m => m.ORI_Name, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.ORI_Name, new { @class = "form-control", @onkeyup = "InputToUpper(this)" })
+                    @Html.ValidationMessageFor(m => m.ORI_Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+            
+            <div class="row">
+                @Html.LabelFor(m => m.EMI_FullNameInfo, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.EMI_FullNameInfo, new { @class = "form-control", @onkeyup = "InputToUpper(this)" })
+                    @Html.ValidationMessageFor(m => m.EMI_FullNameInfo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <br />
+            
+           
+
+            <br />
+            
+            <div class="row">
+                @Html.LabelFor(m => m.VSI_TimeEntrance, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().TimePickerFor(m => m.VSI_TimeEntrance)
+                                  .HtmlAttributes(new { style = "width: 100%; font-size: 14px; font-weight:bold;", required = "required" })
+                                  .Interval(1)
+                                  .Min("07:00")
+                                  .Max("22:00")
+                                  .Format("HH:mm")
+                    )
+                    @Html.ValidationMessageFor(m => m.VSI_TimeEntrance, "", new { @class = "text-danger" })
+                </div>
+                @Html.LabelFor(m => m.VSI_TimeExit, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-4">
+                    @(Html.Kendo().TimePickerFor(m => m.VSI_TimeExit)
+                                  .HtmlAttributes(new { style = "width: 100%; font-size: 14px; font-weight:bold;" })
+                                  .Interval(1)
+                                  .Min("07:00")
+                                  .Max("22:00")
+                                  .Format("HH:mm")
+                    )
+                    @Html.ValidationMessageFor(m => m.VSI_TimeExit, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.ErrorForTimeExit, NamingErrors.ErrorForTimeExit, new { @style = "font-size:12px;" })
+                </div>
+            </div>
+
+            <br />
+            
+            <div class="row">
+                @Html.LabelFor(m => m.VSI_Comment, htmlAttributes: new { @class = "control-label col-md-2 mymodal-label" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(m => m.VSI_Comment, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <div style="float:left">
+                <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-repeat"></span><strong> @NamingStrings.BtnCancel</strong>
+                </button>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg" id="btnSaveVisit">
+                <span class="glyphicon glyphicon-saved"></span><strong> @NamingStrings.BtnSave</strong>
+            </button>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    // Uppercase.
+    function InputToUpper(obj) {
+        if (obj.value != "") {
+            obj.value = obj.value.toUpperCase();
+        }
+    }
+
+    // Check not Visitor selected, in order to copy-paste value to LastName.
+    function CheckVisitorNotDefine(obj) {
+        if ($("#VSI_VST_Id").val() == 0) {
+            $("#VST_LastName").val(obj.value.toUpperCase());
+        }
+    }
+
+    $(document).ready(function () {
+        // Mask Textbox for CardNumber.
+        $('#VSI_CardNumber').mask("999");
+        // Mask Textbox for Office-Number.
+        $('#VSI_OfficeNumber').mask("9999");
+
+        // Set Autofocus to LastName textbox.
+        $('#divModalVisit').on('show.bs.modal', function () {
+            setTimeout(function () { $('#VST_LastName').focus(); }, 300);
+        });
+
+        // Script for unobtrusive validation for Chrome Broswer.
+        kendo.culture("el-GR"); //your culture
+
+        $.validator.addMethod('date',
+            function (value, element) {
+                return this.optional(element) || kendo.parseDate(value)
+            });
+
+        // Client-side form validation with modal dialog.
+        $.validator.unobtrusive.parse("#frmSaveVisit")
+
+        var todayDate = new Date();
+        // Set Current Time & Date for a Visit.
+        if ($("#VSI_Id").val() == 0)
+        {
+            // Set current Time for Entrance.
+            var timePickerEntrance = $("#VSI_TimeEntrance").data("kendoTimePicker");
+            timePickerEntrance.value(todayDate);
+            
+            // Set Current Date.
+            var datePickerVisit = $("#VSI_Date").data("kendoDatePicker");
+            datePickerVisit.value(todayDate);
+            datePickerVisit.trigger("change");
+        }
+        else
+        {
+            // Set current Time for Exit.
+            var timePickerEntrance = $("#VSI_TimeEntrance").data("kendoTimePicker");
+            var timePickerExit = $("#VSI_TimeExit").data("kendoTimePicker");
+            timePickerExit.min(timePickerEntrance.value());
+            //if (timePickerExit.value()==null)
+            //    timePickerExit.value(todayDate);
+        }
+
+        //var ddlVisitorCategory = $("#ddlVisitorCategory").data("kendoDropDownList");
+        var ddlSex = $("#ddlSex").data("kendoDropDownList");
+
+        // Ajax Call for autocomplete Visitor. 
+        $("#VST_LastName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Common/GetVisitorsByLastName",
+                    type: "POST",
+                    dataType: "json",
+                    minLength: 3,
+                    data: { VstLastName: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.VstLastName + ' ' + item.VstFirstName + ' (' + item.VstIdentificationNumber + ')',
+                                value: item.VstLastName,
+                                id: item.VstId,
+                                lastname: item.VstLastName,
+                                firstname: item.VstFirstName,
+                                identificationnumber: item.VstIdentificationNumber,
+                                sexid: item.VstSexId
+                            };
+                        }))
+                    }
+                })
+            },
+            select: function (e, i) {
+                $("#VSI_VST_Id").val(i.item.id);
+                $("#VST_LastName").val(i.item.lastname);
+                $("#VST_FirstName").val(i.item.firstname);
+                $("#VSI_IdentificationNumber").val(i.item.identificationnumber);
+                //ddlVisitorCategory.select(i.item.visitorcategoryName);
+                ddlSex.select(i.item.sexid);
+                setTimeout(function () { $('#VSI_CardNumber').focus(); }, 300);
+            }
+        });
+
+        // Ajax Call for autocomplete Organization-Info.
+        $("#ORI_Name").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Common/GetOrganizationInfoByName",
+                    type: "POST",
+                    dataType: "json",
+                    minLength: 3,
+                    data: { OriName: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.OriName,
+                                value: item.OriName,
+                                id: item.OriId
+                            };
+                        }))
+                    }
+                })
+            },
+            select: function (e, i) {
+                $("#VSI_ORI_Id").val(i.item.id);
+            }
+        });
+
+        // Ajax Call for autocomplete Employee-Info.
+        $("#EMI_FullNameInfo").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Common/GetEmployeeInfoByLastName",
+                    type: "POST",
+                    dataType: "json",
+                    minLength: 3,
+                    data: { EmpLastName: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: item.EmpLastName + ' ' + item.EmpFirstName + ' (' + item.EmpOffice + ' - ' + item.EmpTelephone + ')',
+                                value: item.EmpLastName + ' ' + item.EmpFirstName + ' (' + item.EmpOffice + ' - ' + item.EmpTelephone + ')',
+                                id: item.EmpId
+                            };
+                        }))
+                    }
+                })
+            },
+            select: function (e, i) {
+                $("#VSI_EMI_Id").val(i.item.id);
+            }
+        });
+
+
+        // Ajax Call for autocomplete Visit-Subject.
+        //$("#VSI_Subject").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Common/GetVisitSubjects",
+        //            type: "POST",
+        //            dataType: "json",
+        //            minLength: 3,
+        //            data: { Subject : request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (item) {
+        //                    return {
+        //                        label: item.VisitSubject,
+        //                        value: item.VisitSubject,
+        //                    };
+        //                }))
+        //            }
+        //        })
+        //    }
+        //});
+    });
+</script>
+
+
+

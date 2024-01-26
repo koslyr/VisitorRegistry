@@ -1,0 +1,90 @@
+﻿@using VisReg.Cmn.Namings
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+<div class="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong>ΜΗΤΡΩΟ ΕΠΙΣΚΕΨΕΩΝ ΗΜΕΡΑΣ</strong></div>
+        </div>
+
+        <div class="panel-body">
+            @* ΚΡΙΤΗΤΡΙΑ ΑΝΑΖΗΤΗΣΗΣ *@
+            <div id="divSearchVisit">
+                @{ Html.RenderPartial("~/Views/Shared/Search/_SearchFilterVisit.cshtml"); }
+            </div>
+
+            <div class="row" style="padding-top:6px; padding-bottom:6px">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-group-lg" id="btnSearchVisit">
+                        <span class="glyphicon glyphicon-search"></span><strong> ΕΚΤΕΛΕΣΗ ΑΝΑΖΗΤΗΣΗΣ </strong>
+                    </button>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                @* ΔΗΜΙΟΥΡΓΙΑ ΕΠΙΣΚΕΨΗΣ *@
+                <div class="col-md-offset-9 col-md-2">
+                    <button type="button" class="btn btn-success btn-group-lg" id="btnCreateVisit">
+                        <span class="glyphicon glyphicon-briefcase"></span> <strong> @NamingStrings.BtnCreateVisit </strong>
+                    </button>
+                </div>
+            </div>
+
+            @* ΛΙΣΤΑ ΕΠΙΣΚΕΨΕΩΝ (Grid) *@
+            <div id="divGridVisit" style="margin-top:6px;">
+                @{ Html.RenderPartial("GetVisitsGrid"); }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@Scripts.Render("~/Scripts/App/ToastrSetOptions.js")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Εμφάνιση Notification.
+        if ('@ViewBag.MsgForNotification' != '') {
+            var msg = "@ViewBag.MsgForNotification";
+            toastr.error(msg);
+        }
+
+        @*if (@TempData["myErrMsg"] != null) {
+            var msg = '@TempData["myErrMsg"]';
+            toastr.error(msg);
+        }*@
+
+        $("#btnSearchVisit").click(function () {
+            $("#grdVisits").data("kendoGrid").dataSource.read();
+        });
+
+        // return
+        $(document).bind('keydown', function (e) {
+            if (e.which == 13) {
+                $('#btnSearchVisit').trigger('click');
+            }
+        });
+
+        $(document).bind('keydown', function (e) {
+            if (e.keyCode == 113) {
+                $('#btnCreateVisit').trigger('click');
+            }
+        });
+
+        // Show Modal for Create Visit.
+        $("#btnCreateVisit").click(function () {
+            // Ορισμός του Action.
+            var myUrlAction = "/Visit/CreateVisit";
+
+            $.get(myUrlAction,
+              function (data) {
+                  $("#divModalContentVisit").html(data);
+                  $("#divModalVisit").modal('show');
+              });
+        })
+    });
+</script> 

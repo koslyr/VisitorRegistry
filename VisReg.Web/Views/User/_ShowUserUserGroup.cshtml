@@ -1,0 +1,28 @@
+﻿@using Kendo.Mvc.UI
+@model VisReg.Web.ViewModels.UserUserGroupViewModel
+
+<div class="col-md-8">
+    @(Html.Kendo().Grid<UserUserGroupViewModel>()
+                    .Name("grdUserUserGroup")
+                    .HtmlAttributes( new { style = "font-size:14px"})
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.UUG_Id).Hidden();
+                        columns.Bound(p => p.UserGroupName);
+                        columns.Bound(p => p.UserGroupDescription);
+                    })
+                    .Sortable()
+                    .DataSource(ds => ds
+                                .Ajax()
+                                .Model(model => model.Id(p => p.UUG_Id))
+                                .Read(rd => rd.Action("GetUserUserGroupGridData", "User").Data("GetUserId"))
+                                .ServerOperation(true))
+    )
+</div>
+
+<script type="text/javascript">
+     // Add Additional Row Header after grid declaration
+     $(document).ready(function () {
+         $("#grdUserUserGroup").find("thead").first().prepend("<tr><th class='k-header' style='text-align:center;font-weight:bold' colspan='4'>ΛΙΣΤΑ ΟΜΑΔΩΝ ΠΟΥ ΑΝΗΚΕΙ Ο ΧΡΗΣΤΗΣ</th></tr>");
+     });
+</script>

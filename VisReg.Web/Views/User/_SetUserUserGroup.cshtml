@@ -1,0 +1,39 @@
+﻿@using Kendo.Mvc.UI
+@model VisReg.Web.ViewModels.ExtUserUserGroupViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Kendo().Grid<ExtUserUserGroupViewModel>()
+                        .Name("grdUserGroupInfo")
+                        .HtmlAttributes(new { style = "font-size:14px" })
+
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.USG_Id).Hidden();
+
+                            columns.Bound(p => p.USG_Name);
+                            columns.Bound(p => p.USG_Description);
+
+                            columns.Bound(p => p.UserIsBelongUserGroup)
+                                         .HtmlAttributes(new { @style = "text-align:center"})
+                                         .ClientTemplate("<input type='checkbox' #= UserIsBelongUserGroup ? checked='checked' :'' # />");
+                        })
+
+                        .Sortable()
+                        .Selectable()
+                        .DataSource(ds => ds
+                                    .Ajax()
+                                    .Model(model => model.Id(p => p.USG_Id))
+                                    .Read(rd => rd.Action("GetUserUserGroupInfoGridData", "User").Data("GetUserId"))
+                                    .ServerOperation(true))
+        )
+    </div>
+</div>
+
+<script type="text/javascript">
+     // Add Additional Row Header after grid declaration
+     $(document).ready(function () {
+         $("#grdUserGroupInfo").find("thead").first().prepend("<tr><th class='k-header' style='text-align:center;font-weight:bold' colspan='3'>ΛΙΣΤΑ ΟΜΑΔΩΝ ΓΙΑ ΤΟΝ ΧΡΗΣΤΗ</th></tr>");
+     });
+
+</script>

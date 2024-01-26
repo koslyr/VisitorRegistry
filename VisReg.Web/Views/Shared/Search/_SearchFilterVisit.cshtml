@@ -1,0 +1,111 @@
+﻿@using VisReg.Cmn.Enumeration
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+<fieldset class="well the-fieldset" style="padding-top:6px;">
+    <legend class="the-legend">Κριτήρια Αναζήτησης</legend>
+
+    <div class="row" style="font-size:14px; margin-bottom:6px;">
+        @* Αναζήτηση με βάση το ΕΠΩΝΥΜΟ ΕΠΙΣΚΕΠΤΗ*@
+        <div class="col-md-2 text-right">
+            @Html.LabelFor(m => m.SearchLastName, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.SearchLastName, new { @class = "form-control text-left input-group-lg", @style = "font-weight:bold", @onkeyup = "InputToUpper(this)" })
+        </div>
+        
+        @* Αναζήτηση με βάση τον ΑΡΙΘΜΟ ΤΑΥΤΟΠΡΟΣΩΠΙΑΣ*@
+        <div class="col-md-2 text-right">
+            @Html.LabelFor(m => m.SearchIdentificationNumber, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.SearchIdentificationNumber, new { @class = "form-control text-left input-group-lg", @style = "font-weight:bold" })
+        </div>
+    </div>
+
+    <div class="row" style="font-size:14px; margin-bottom:6px;">
+        @* Αναζήτηση με βάση την ΗΜ/ΝΙΑ ΕΠΙΣΚΕΨΗΣ*@
+        <div class="col-md-2 text-right">
+            @Html.LabelFor(m => m.SearchDateVisit, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @(Html.Kendo().DatePickerFor(m => m.SearchDateVisit)
+                          .Culture("el-GR")
+                          .HtmlAttributes(new { @class = "form-control", @style = "width:92%; font-weight:bold", type = "text" })
+                          
+             )
+        </div>
+
+        @* Αναζήτηση με βάση τον ΑΡΙΘΜΟ ΚΑΡΤΑΣ*@
+        <div class="col-md-2 text-right">
+            @Html.LabelFor(m => m.SearchCardNumber, new { @class = "control-label" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(m => m.SearchCardNumber, new { @class = "form-control text-left input-group-lg", @style = "font-weight:bold" })
+        </div>
+    </div>
+
+    <div class="row" style="font-size:14px; margin-bottom:6px;">
+        @* Αναζήτηση με βάση την ΚΑΤΑΣΤΑΣΗ ΕΠΙΣΚΕΨΗΣ*@
+        <div class="col-md-2 text-right">
+            @Html.Label("Κατάσταση Επ/ψης")
+        </div>
+        <div class="col-md-4">
+                @(Html.Kendo().DropDownList()
+                              .Name("ddlVisitStatus")
+                              .HtmlAttributes(new { @id = "ddlVisitStatus", style = "width:100%; font-size:12px; font-weight:bold" })
+                              .BindTo(new List<SelectListItem>
+                                     {
+                                            new SelectListItem{
+                                                Text = "Όλες οι Καταστάσεις",
+                                                Value = EnmVisitStatus.All.ToString()
+                                            },
+                                            new SelectListItem{
+                                                Text = "Μόνο οι Ανοικτές",
+                                                Value = EnmVisitStatus.Open.ToString()
+                                            },
+                                            new SelectListItem{
+                                                Text = "Μόνο οι Κλειστές",
+                                                Value = EnmVisitStatus.Closed.ToString()
+                                            }
+                                     })
+            )
+        </div>
+    </div>
+
+</fieldset>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Mask Textbox for CardNumber.
+        $('#SearchCardNumber').mask("999");
+        // Define Date.
+        var datePicker = $("#SearchDateVisit").data("kendoDatePicker");
+        var todayDate = new Date();
+        datePicker.value(todayDate);
+        datePicker.trigger("change");
+    })
+   
+    // Uppercase.
+    function InputToUpper(obj) {
+        if (obj.value != "") {
+            obj.value = obj.value.toUpperCase();
+        }
+    }
+
+    function GetSearchFilterVisit() {
+       var myDateVisit = $("#SearchDateVisit").val();
+       var myLastName = $("#SearchLastName").val();
+       var myIdentificationNumber = $("#SearchIdentificationNumber").val();
+       var myCardNumber = $("#SearchCardNumber").val();
+       var myVisitStatus = $("#ddlVisitStatus").data("kendoDropDownList").value();
+
+       return {
+           DateVisit : myDateVisit,
+           LastName: myLastName,
+           IdentificationNumber: myIdentificationNumber,
+           CardNumber: myCardNumber,
+           VisitStatus: myVisitStatus
+       };
+   }
+</script>
+

@@ -1,0 +1,125 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.UserViewModel
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+<div class="container">
+    @using (Html.BeginForm("SaveUser", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", autocomplete = "off", id = "frmSaveUser" }))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.USE_Id)
+        @Html.HiddenFor(m => m.LstUserGroup)
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <div class="panel-title text-center"><strong> ΣΤΟΙΧΕΙΑ ΧΡΗΣΤΗ</strong></div>
+            </div>
+
+            <div class="panel-body">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.USE_UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(m => m.USE_UserName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.USE_UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.USE_LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(m => m.USE_LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.USE_LastName, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(m => m.USE_FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(m => m.USE_FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.USE_FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.USE_Telephone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(m => m.USE_Telephone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.USE_Telephone, "", new { @class = "text-danger" })
+                    </div>
+                    @Html.LabelFor(m => m.USE_Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-4">
+                        @Html.EditorFor(m => m.USE_Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(m => m.USE_Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+
+                @* ΣΤΟΙΧΕΙΑ ΟΜΑΔΩΝ ΠΟΥ ΑΝΗΚΕΙ Ο ΧΡΗΣΤΗΣ (Grid) *@
+                <div class="row">
+                    <div class="col-md-6" id="divUserUserGroup">
+                        @{ Html.RenderPartial("_SetUserUserGroup", new ExtUserUserGroupViewModel()); }
+                    </div>
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="row">
+                    @* ΑΚΥΡΩΣΗ  *@
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-danger btn-group-lg btn-block" id="btnCancel">
+                            <span class="glyphicon  glyphicon-share-alt"></span> <strong> @NamingStrings.BtnCancel </strong>
+                        </button>
+                    </div>
+
+                    @* ΑΠΟΘΗΚΕΥΣΗ ΣΤΟΙΧΕΙΩΝ ΧΡΗΣΤΗ *@
+                    <div class="col-md-offset-1 col-md-2">
+                        <button type="submit" class="btn btn-success btn-group-lg btn-block" id="btnSaveUser">
+                            <span class="glyphicon glyphicon-floppy-disk"></span> <strong> @NamingStrings.BtnSave </strong>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        // Cancel click
+        $("#btnCancel").click(function () {
+            var myUserId;
+            myUserId = $("#USE_Id").val();
+            if (myUserId > 0)
+                window.location.href = "/User/ShowUser?UserId=" + myUserId;
+            else
+                window.location.href = "/User/GetUsers";
+        });
+
+        // Save click.
+        $('#btnSaveUser').on('click', function (e) {
+            e.preventDefault(); // always prevent default
+
+            // Get Selected UserGroups for User.
+            var myLstIsSelectedUserGroup = [];
+            var grid = $("#grdUserGroupInfo").data("kendoGrid");
+            grid.tbody.find("input:checked").closest("tr").each(function (index) {
+                var dataItem = grid.dataItem(this);
+                myLstIsSelectedUserGroup.push(dataItem.USG_Id);
+            });
+            $("#LstUserGroup").val(myLstIsSelectedUserGroup);
+
+            $("#frmSaveUser").submit();
+        });
+    });
+
+    function GetUserId() {
+        var myUserId = $("#USE_Id").val();
+
+        return {
+            UserId: myUserId
+        };
+    }
+</script>
+

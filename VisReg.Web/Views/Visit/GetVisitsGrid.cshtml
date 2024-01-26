@@ -1,0 +1,192 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Kendo().Grid<VisitInfoViewModel>()
+                   .Name("grdVisits")
+                   .ToolBar(t =>
+                             t.Template("<h5><strong>Μητρώο Επισκέψεων Ημέρας</strong></h5>"))
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.VSI_Id).Hidden();
+                        columns.Bound(p => p.VSI_VST_Id).Hidden();
+
+                        // Define a template column with row counter
+                        columns.Template(t => { }).ClientTemplate("#=renderRowNumber(data) #").Title("#").Width("10px");
+
+                        columns.Bound(p => p.VisitorFullName).Width("160px")
+                                                             .HtmlAttributes(new { style = "font-weight:bold" })
+                                                             .ClientTemplate(Html.ActionLink("#=VisitorFullName#", "ShowVisitor", "Visitor", new { area = "", VisitorId = "#=VSI_VST_Id#" }, null).ToHtmlString()); ;
+                        columns.Bound(p => p.VSI_IdentificationNumber).Width("80px")
+                                                                      .HtmlAttributes(new { style = "font-weight:bold" });
+                        columns.Bound(p => p.VSI_CardNumber).Width("80px")
+                                                            .HtmlAttributes(new { style = "text-align:center; font-weight:bold" });
+                        columns.Bound(p => p.VSI_OfficeNumber).Width("80px")
+                                                              .HtmlAttributes(new { style = "text-align:center; font-weight:bold" }); 
+                        columns.Bound(p => p.VSI_TimeEntrance).Width("60px")
+                                                              .ClientTemplate("#= kendo.toString(VSI_TimeEntrance.Hours, '00') #:#= kendo.toString(VSI_TimeEntrance.Minutes,'00') #")
+                                                              .HtmlAttributes(new { style = "text-align:center;" });
+                        columns.Bound(p => p.VSI_TimeExit).Width("60px")
+                                                          .ClientTemplate("#=(VSI_TimeExit == null) ? ' ' : getTime(VSI_TimeExit) # ")
+                                                          .HtmlAttributes(new { style = "text-align:center;" });
+
+                        columns.Command(cmd =>
+                        {
+                            cmd.Custom("Edit").Click("EditVisit").Text(" ");
+                            cmd.Custom("Exit").Click("ExitVisit").Text("<span class=\"glyphicon glyphicon-check\"></span> ");
+                            cmd.Custom("Del").Click("DeleteVisit").Text(" ");
+                        }).Title("Ενέργειες").Width("140px");
+
+                    })
+                    .Sortable()
+                    .Selectable()
+                    .Events(e => e.DataBound("dataBound"))
+                    .DataSource(ds => ds
+                                .Ajax()
+                                .Model(model =>
+                                {
+                                    model.Id(m => m.VSI_Id);
+
+                                })
+                                .Read(read => read.Action("GetVisitsGridData", "Visit", new { area = string.Empty }).Data("GetSearchFilterVisit"))
+                                )
+        )
+    </div>
+</div>
+
+<!-- Μodal για ΦΟΡΜΑ ΕΠΙΣΚΕΨΗΣ -->
+<div class="container">
+    <div id="divModalVisit" class="modal fade in">
+        <div class="modal-dialog modal-lg mymodal-dialog-center">
+            <div class="modal-content">
+                <div id="divModalContentVisit">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Μodal για ΔΙΑΓΡΑΦΗ ΕΠΙΣΚΕΨΗΣ -->
+<div class="container">
+    <div id="divModalVisitDelete" class="modal fade in">
+        <div class="modal-dialog mymodal-dialog-center">
+            <div class="modal-content">
+                <div id="divModalContentVisitDelete">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        kendo.culture("el-GR");
+
+        // Double-click row.
+        $("#grdVisits").on("dblclick", "tr.k-state-selected", function () {
+            var myGrid = $("#grdVisits").data("kendoGrid");
+            var myRowSelected = myGrid.dataItem(myGrid.select());
+
+            // Ορισμός του Action.
+            var myUrlAction = "/Visit/EditVisit?VisitId=" + myRowSelected.VSI_Id;
+
+            $.get(myUrlAction,
+                  function (data) {
+                      $("#divModalContentVisit").html(data);
+                      $("#divModalVisit").modal('show');
+                  });
+        });
+    });
+
+    var rowcounter = 1;
+
+    function renderRowNumber(data) {
+        return rowcounter++;
+    }
+
+    function dataBound(e) {
+        // AutoNumber row.
+        rowcounter = 1;
+
+        $(".k-grid-Del span").addClass("k-icon k-delete");
+        $(".k-grid-Edit span").addClass("k-icon k-edit");
+
+        // Set Grid conditional bg-color for not time-exit set.
+        var grid = $('#grdVisits').data('kendoGrid');
+        var data = grid.dataSource.data();
+
+        grid.tbody.find('>tr').each(function () {
+            var dataItem = grid.dataItem(this);
+            if (dataItem.VSI_TimeExit == null) {
+                $(this).css('background-color', '#ffc2b3');
+            }
+            else {
+                $(this).css('background-color', '#9ae59a');
+            }
+        });
+    }
+
+    // Modal for Edit.
+    function EditVisit(e) {
+        e.preventDefault();
+
+        var grid = $('#grdVisits').data('kendoGrid');
+        var myRowData = this.dataItem($(e.currentTarget).closest("tr"));
+        // Ορισμός του Action.
+        var myUrlAction = "/Visit/EditVisit?VisitId=" + myRowData.VSI_Id;
+
+        $.get(myUrlAction,
+              function (data) {
+                  $("#divModalContentVisit").html(data);
+                  $("#divModalVisit").modal('show');
+              });
+    }
+
+    // Modal for Edit only the Time-Exit.
+    function ExitVisit(e) {
+        e.preventDefault();
+
+        var grid = $('#grdVisits').data('kendoGrid');
+        var myRowData = this.dataItem($(e.currentTarget).closest("tr"));
+        //
+        var myData = { 'VisitInfoId': myRowData.VSI_Id };
+
+        $.ajax({
+            type: "POST",
+            url: "/Visit/EditVisitTimeExit",
+            data: JSON.stringify(myData),
+            contentType: "application/json",
+            dataType: 'json',
+        })
+        .done(function () {
+            $("#grdVisits").data("kendoGrid").dataSource.read();
+        });
+    }
+    // Modal for Delete.
+    function DeleteVisit(e) {
+        e.preventDefault();
+
+        var grid = $('#grdVisits').data('kendoGrid');
+        var myRowData = this.dataItem($(e.currentTarget).closest("tr"));
+        // Ορισμός του Action.
+        var myUrlAction = "/Visit/DeleteVisit?VisitId=" + myRowData.VSI_Id;
+
+        $.get(myUrlAction,
+             function (data) {
+                 $("#divModalContentVisitDelete").html(data);
+                 $("#divModalVisitDelete").modal('show');
+             });
+    }
+
+    function zeroPad(num, places) {
+        return String(num).padStart(places, '0');
+    }
+
+    function getTime(VSI_Time) {
+        return zeroPad(VSI_Time.Hours, 2) + ':' + zeroPad(VSI_Time.Minutes, 2);
+    }
+</script>

@@ -1,0 +1,46 @@
+﻿@using VisReg.Cmn.Namings
+
+<div class="navbar navbar-custom" role="navigation">
+    <div class="container">
+        @*Menu:  *@
+        <div class="navbar-header">
+           <a class="navbar-brand" href="@Url.Action("GetVisits", "Visit")"><img src="~/Content/Images/Visitor.png" height="40"></a>
+            @Html.ActionLink(NamingStrings.TitleAppShortName, "GetVisits", "Visit", new { area = "" }, new { @class = "navbar-brand font-bold" })
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                @*Menu: ΛΙΣΤΕΣ *@
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button"> Λίστες <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Λίστα Επισκέψεων", "GetVisitsList", "Visit", new { area = "" }, new { @class = "navbar-brand font-bold" })</li>
+                        <li>@Html.ActionLink("Λίστα Επισκεπτών", "GetVisitors", "Visitor", new { area = "" }, new { @class = "navbar-brand font-bold" })</li>
+                    </ul>
+                </li>
+
+                @*Menu: ΣΤΑΤΙΣΤΙΚΑ *@
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button">Στατιστικά<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @*<li>@Html.ActionLink("Στατιτικά Επισκέψεων", "GetStatCommitteeEmployeeByCom", "CommitteeEmployee", new { area = "" }, new { @class = "navbar-brand font-bold" })</li>*@
+                    </ul>
+                </li>
+
+                 @*Menu: ΔΙΑΧΕΙΡΙΣΗ *@
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button">Διαχείριση<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Λίστα Χρηστών", "GetUsers", "User", new { area = "" }, new { @class = "navbar-brand font-bold" })</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                @*Menu: Έξοδος από την Εφαρμογή. *@
+                @Html.Partial("_LoginPartial")
+            </ul>
+        </div>
+    </div>
+</div>
+

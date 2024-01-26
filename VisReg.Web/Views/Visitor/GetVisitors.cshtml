@@ -1,0 +1,63 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitorViewModel
+
+@{ ViewBag.Title = NamingStrings.TitleAppShortName; }
+
+<div class="container">
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <div class="panel-title text-center"><strong>ΛΙΣΤΑ ΕΠΙΣΚΕΠΤΩΝ</strong></div>
+        </div>
+
+        <div class="panel-body">
+            @* ΚΡΙΤΗΤΡΙΑ ΑΝΑΖΗΤΗΣΗΣ *@
+            <div id="divSearchVst">
+                @{ Html.RenderPartial("~/Views/Shared/Search/_SearchFilterVisitor.cshtml"); }
+            </div>
+
+            <div class="row" style="padding-top:6px; padding-bottom:6px">
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-lg" id="btnSearchVisitor">
+                        <span class="glyphicon glyphicon-search"></span><strong> ΕΚΤΕΛΕΣΗ ΑΝΑΖΗΤΗΣΗΣ </strong>
+                    </button>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+                @* ΔΗΜΙΟΥΡΓΙΑ ΕΠΙΣΚΕΠΤΗ *@
+                <div class="col-md-offset-9 col-md-2">
+                    <button type="button" class="btn btn-success btn-group-lg" id="btnCreateVisitor"
+                            onclick="location.href='@Url.Action("CreateVisitor", "Visitor")'">
+                        <span class="glyphicon glyphicon-user"></span> <strong> @NamingStrings.BtnCreateVisitor </strong>
+                    </button>
+                </div>
+            </div>
+
+            @* ΛΙΣΤΑ ΕΠΙΣΚΕΠΤΩΝ (Grid) *@
+            <div id="divGridVst" style="margin-top:6px;">
+                @{ Html.RenderPartial("GetVisitorsGrid"); }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSearchVisitor").click(function () {
+            $("#grdVisitors").data("kendoGrid").dataSource.read();
+        });
+
+        // return
+        $(document).bind('keydown', function (e) {
+            if (e.which == 13) {
+                $('#btnSearchVst').trigger('click');
+            }
+        });
+
+    });
+</script> 

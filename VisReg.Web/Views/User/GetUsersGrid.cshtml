@@ -1,0 +1,52 @@
+﻿@using Kendo.Mvc.UI
+@model VisReg.Web.ViewModels.UserViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Kendo().Grid<UserViewModel>()
+                        .Name("grdUsers")
+                        .ToolBar(t =>
+                                 t.Template("<h5><strong>Λίστα Χρηστών</strong></h5>"))
+                        .Columns(columns =>
+                        {
+                            columns.Bound(p => p.USE_Id).Hidden();
+
+                            columns.Bound(p => p.USE_UserName).Width("80px"); 
+                            columns.Bound(p => p.USE_FullName).Width("120px");
+                            columns.Bound(p => p.USE_Telephone).Width("70px").HtmlAttributes(new { style = "text-align:center" });
+                            columns.Bound(p => p.USE_Email).Width("70px");
+                            columns.Bound(p => p.USE_LoginLastDate).Width("120px").HtmlAttributes(new { style = "text-align:center" }).Format("{0:G}");
+                            columns.Bound(p => p.USE_LoginCounter).Width("50px").HtmlAttributes(new { style = "text-align:center" });
+                            columns.Bound(p => p.USE_IsActive).Width("50px").HtmlAttributes(new { style = "text-align:center" });
+
+                            columns.Command(cmd =>
+                            {
+                                cmd.Custom("Show").Click("ShowUser").Text("<span class=\"glyphicon glyphicon-eye-open\"></span> Καρτέλα");
+                            }).Title("Ενέργειες").Width(90);
+
+                        })
+                        .HtmlAttributes(new { style = "font-size:12px; font-weight:bold;" })
+                        .Sortable()
+                        .Selectable()
+                        .DataSource(ds => ds
+                                    .Ajax()
+                                    .Model(model => model.Id(p => p.USE_Id))
+                                    .Read(rd => rd.Action("GetUsersGridData", "User", new { area = " " }))
+                                    .ServerOperation(false))
+        )
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var grid = $("#grdUsers").data("kendoGrid");
+    })
+
+    // Show User.
+    function ShowUser(e) {
+        e.preventDefault();
+
+        var myUser = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location.href = "/User/ShowUser?UserId=" + myUser.USE_Id;
+    }
+</script> 

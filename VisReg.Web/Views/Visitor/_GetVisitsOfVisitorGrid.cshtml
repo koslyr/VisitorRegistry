@@ -1,0 +1,100 @@
+﻿@using Kendo.Mvc.UI
+@using VisReg.Cmn.Namings
+@model VisReg.Web.ViewModels.VisitInfoViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        @(Html.Kendo().Grid<VisitInfoViewModel>()
+                   .Name("grdVisits")
+                   .ToolBar(t =>
+                             t.Template("<h5><strong>Λίστα Επισκέψεων</strong></h5>"))
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.VSI_Id).Hidden();
+                        columns.Bound(p => p.VSI_VST_Id).Hidden();
+
+                        // Define a template column with row counter
+                        columns.Template(t => { }).ClientTemplate("#=renderRowNumber(data) #").Title("#").Width("10px");
+
+                        columns.Bound(p => p.VSI_Date).Width("80px")
+                                                      .HtmlAttributes(new { style = "text-align:center; font-weight:bold" });
+                        columns.Bound(p => p.VisitorFullName).Width("160px");
+                        columns.Bound(p => p.VSI_IdentificationNumber).Width("60px");
+                        columns.Bound(p => p.VSI_CardNumber).Width("60px")
+                                                            .HtmlAttributes(new { style = "text-align:center; font-weight:bold" });
+                        columns.Bound(p => p.VSR_Name).Width("100px");
+                        columns.Bound(p => p.VSI_TimeEntrance).Width("60px")
+                                                              .ClientTemplate("#= kendo.toString(VSI_TimeEntrance.Hours, '00') #:#= kendo.toString(VSI_TimeEntrance.Minutes,'00') #")
+                                                              .HtmlAttributes(new { style = "text-align:center;" });
+                        columns.Bound(p => p.VSI_TimeExit).Width("60px")
+                                                          .ClientTemplate("#=(VSI_TimeExit == null) ? ' ' : getTime(VSI_TimeExit) # ")
+                                                          .HtmlAttributes(new { style = "text-align:center;" });
+
+                        columns.Command(cmd =>
+                        {
+                            cmd.Custom("Show").Click("ShowVisitInfo").Text("<span class=\"glyphicon glyphicon-eye-open\"></span> Καρτέλα");
+                        }).Title("Ενέργειες").Width("60px");
+
+                    })
+                    .Sortable()
+                    .Selectable()
+                    .Events(e => e.DataBound("dataBound"))
+                    .DataSource(ds => ds
+                                .Ajax()
+                                .Model(model =>
+                                {
+                                    model.Id(m => m.VSI_Id);
+
+                                })
+                                .Read(read => read.Action("GetVisitsOfVisitorGridData", "Visitor", new { area = " " }).Data("GetVisitorId"))
+                                )
+        )
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        kendo.culture("el-GR");
+    });
+
+    var counter = 1;
+
+    function renderRowNumber(data) {
+        return counter++;
+    }
+
+    function zeroPad(num, places) {
+        return String(num).padStart(places, '0');
+    }
+
+    function getTime(VSI_Time) {
+        return zeroPad(VSI_Time.Hours, 2) + ':' + zeroPad(VSI_Time.Minutes, 2);
+    }
+
+    function dataBound(e) {
+        // Set Grid conditional bg-color for not time-exit set.
+        var grid = $('#grdVisits').data('kendoGrid');
+        var data = grid.dataSource.data();
+
+        grid.tbody.find('>tr').each(function () {
+            var dataItem = grid.dataItem(this);
+            if (dataItem.VSI_TimeExit == null)
+            {
+                $(this).css('background-color', '#ffc2b3');
+            }
+            else
+            {
+                $(this).css('background-color', '#9ae59a');
+            }
+        });
+    }
+
+    function ShowVisitInfo(e) {
+        e.preventDefault();
+
+        var myVisit = this.dataItem($(e.currentTarget).closest("tr"));
+        window.location.href = "/Visit/ShowVisit?VisitId=" + myVisit.VSI_Id;
+    }
+</script>
+
