@@ -1,1 +1,1 @@
-# 1. VisReg
+Visitor Registry
