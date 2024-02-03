@@ -22,7 +22,7 @@ namespace VisReg.Srv
         {
             var myUser = from use in _VisReg.User
                          where use.USE_UserName == UserName
-                         select use;
+                         select use.UserId;
 
             if (myUser.Count() > 0)
                 return true;
